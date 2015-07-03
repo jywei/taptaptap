@@ -1,0 +1,89 @@
+<%= form_for(@posting) do |f| %>
+  <% if @posting.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@posting.errors.count, "error") %> prohibited this posting from being saved:</h2>
+
+      <ul>
+      <% @posting.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :source %><br>
+    <%= f.text_field :source %>
+  </div>
+  <div class="field">
+    <%= f.label :category %><br>
+    <%= f.text_field :category %>
+  </div>
+  <div class="field">
+    <%= f.label :location %><br>
+    <%= f.text_field :location %>
+  </div>
+  <div class="field">
+    <%= f.label :external_id %><br>
+    <%= f.text_field :external_id %>
+  </div>
+  <div class="field">
+    <%= f.label :external_url %><br>
+    <%= f.text_field :external_url %>
+  </div>
+  <div class="field">
+    <%= f.label :heading %><br>
+    <%= f.text_field :heading %>
+  </div>
+  <div class="field">
+    <%= f.label :body %><br>
+    <%= f.text_area :body %>
+  </div>
+  <div class="field">
+    <%= f.label :html %><br>
+    <%= f.text_area :html %>
+  </div>
+  <div class="field">
+    <%= f.label :expires %><br>
+    <%= f.datetime_select :expires %>
+  </div>
+  <div class="field">
+    <%= f.label :language %><br>
+    <%= f.text_field :language %>
+  </div>
+  <div class="field">
+    <%= f.label :price %><br>
+    <%= f.text_field :price %>
+  </div>
+  <div class="field">
+    <%= f.label :currency %><br>
+    <%= f.text_field :currency %>
+  </div>
+  <div class="field">
+    <%= f.label :images %><br>
+    <%= f.text_field :images %>
+  </div>
+  <div class="field">
+    <%= f.label :annotation %><br>
+    <%= f.text_field :annotation %>
+  </div>
+  <div class="field">
+    <%= f.label :status %><br>
+    <%= f.text_field :status %>
+  </div>
+  <div class="field">
+    <%= f.label :flagged %><br>
+    <%= f.check_box :flagged %>
+  </div>
+  <div class="field">
+    <%= f.label :deleted %><br>
+    <%= f.check_box :deleted %>
+  </div>
+  <div class="field">
+    <%= f.label :immortal %><br>
+    <%= f.check_box :immortal %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

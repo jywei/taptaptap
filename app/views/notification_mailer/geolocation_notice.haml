@@ -1,0 +1,8 @@
+= "Geolocation breakthrough for postings for #{@time - 1.day} to #{@time}"
+%br
+= "Category: spreadsheet / API"
+%br
+- @geolocation_counts.each do |category, geoloc_counts|
+	- if geoloc_counts[0] != 0 and geoloc_counts[1] != 0
+		= "#{category}: #{number_with_delimiter geoloc_counts[0], delimiter: ','} / #{number_with_delimiter geoloc_counts[1], delimiter: ','}"
+		%br

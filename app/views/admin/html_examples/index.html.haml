@@ -1,0 +1,27 @@
+%table.table.table-striped
+  %thead
+    %tr
+      %th Date
+      %th Name
+      %th URL
+      %th Committer
+      %th HTML
+      %th Status
+      %th Comment
+      %th Notification
+      %th Actions
+  %tbody
+    - @html_examples.each do |html_example|
+      - present html_example do |presenter|
+        %tr
+          %td= presenter.created_at.strftime('%D %T')
+          %td= presenter.name
+          %td= link_to presenter.url_label, presenter.url
+          %td= presenter.committer
+          %td
+            = presenter.short_html
+            = link_to 'view', admin_html_example_path(html_example)
+          %td= status_badge presenter.status
+          %td= presenter.comment
+          %td= check_box_tag :notification, presenter.notification
+          %td= presenter.actions

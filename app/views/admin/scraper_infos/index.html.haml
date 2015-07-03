@@ -1,0 +1,57 @@
+:scss
+  table#scraper_info.table{
+
+    th:nth-child(2) {
+      width: 100px;  
+    }
+    th:nth-child(3) {
+      width: 100px;  
+    }
+    th:nth-child(4) {
+      width: 150px;  
+    }
+    td {
+        padding-right: 30px;
+    }
+    tbody td {
+      font-size: 12px;
+      padding: 1px;
+      color: #000;
+    }
+    tbody tr.green_row {
+      background-color: #02ff00;  
+    }
+    tbody tr.red_row {
+      background-color: #f50f0f;  
+    }
+    tbody tr:hover{
+      opacity: 0.8;
+    }
+  }
+
+.container
+  .row
+    .span12
+      %form.form-inline.well.well-large{action: "#{admin_scraper_infos_path}"}
+        .span8
+          = select_tag :source, options_for_select( @sources, @source), {style: "width: 140px;"}
+          = text_field_tag :filter, "#{ @filter }", placeholder: "filter message", style: "width: 140px"
+          %button.btn.btn-primary{ type: 'submit' } Show
+        .span2.text-right
+          - if @is_admin
+            %a{href: "#{admin_auth_tokens_path}", class: "btn btn-small"}
+              Settings
+  .row
+    .span12  
+      %table#scraper_info.table
+        %thead
+          %tr
+            %th Info message
+            %th Event code
+            %th Source
+            %th Created at
+        %tbody
+        - @events.each do |event| 
+          = render partial: 'row', locals: {event: event }    
+
+      = paginate @events

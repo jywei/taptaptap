@@ -1,0 +1,10 @@
+%table.table.table-hovered.table-bordered
+  %tr
+    %th API key
+    %th Company
+  - @contracts.each do |contract|
+    %tr
+      %td
+        = link_to contract["auth_token"], "#"#client_rates_path
+      %td
+        = "............................"

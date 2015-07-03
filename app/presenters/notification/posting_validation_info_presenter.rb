@@ -1,0 +1,6 @@
+Notification::PostingValidationInfoPresenter = Class.new(NotificationPresenter)
+Notification::PostingVolumePresenter = Class.new(NotificationPresenter)
+Notification::EbaymPresenter = Class.new(NotificationPresenter)
+Notification::CraigPresenter = Class.new(NotificationPresenter)
+Notification::HmngsPresenter = Class.new(NotificationPresenter)
+Notification::RemlsPresenter = Class.new(NotificationPresenter)

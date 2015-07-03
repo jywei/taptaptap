@@ -1,0 +1,40 @@
+:javascript
+  $(document).ready(function() {
+    $('.input-daterange').datepicker({
+        format: "yyyy-mm-dd",
+        startDate: "#{ @min_date }",
+        endDate: "#{ @max_date }",
+        autoclose: true
+    });
+
+    $("#empty_timestamps div[id*=chart-]").each(function(key, chart) {
+      $.each($(chart).highcharts().series, function(idx, elt) {
+        elt.update({
+          events: {
+            click: function(event) {
+              location.href =  "#{ admin_empty_ids_path }" + "?date=" + event.point.category;
+            }
+          },
+          cursor: 'pointer'
+        });
+      });
+    });
+  });
+
+= javascript_include_tag "highcharts", "chartkick"
+
+%h3
+  Empty timestamps (CRAIG only)
+
+%form.form-inline{ action: admin_empty_timestamps_path }
+  %label Period:
+
+  %span.input-daterange
+    %input.input-small{ :type => "text", :name => 'start_date', :value => @start_date }
+    %span.add-on to
+    %input.input-small{ :type => "text", :name => 'end_date', :value => @end_date }
+
+  %button.btn.btn-primary{ type: 'submit' } Show
+
+#empty_timestamps
+  = column_chart @series, @chart_options.deep_merge({ library: { legend: { enabled: false } } })

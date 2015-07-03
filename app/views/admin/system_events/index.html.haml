@@ -1,0 +1,13 @@
+%h1 System Events
+%table.table.table-bordered
+  %tr
+    %th id
+    %th event
+    %th description
+    %th Timestamp
+  - @events.each do |e|
+    %tr
+      %td= e.id
+      %td= e.event
+      %td= raw e.description
+      %td= e.created_at

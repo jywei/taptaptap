@@ -1,0 +1,80 @@
+.row
+  .span10.offset1
+    %ul.nav.nav-list
+      %li.nav-header
+        Configuration
+
+      %li
+        = link_to 'Converters', admin_converters_path
+      %li
+        = link_to 'Sources', admin_sources_path
+      %li
+        = link_to 'Partitions Management', admin_partitions_path
+      %li
+        = link_to 'Parsing Management', admin_parsing_path
+      %li
+        = link_to 'Annotations', admin_annotations_path
+      %li
+        = link_to 'Annotation calculations', admin_calculate_annotations_path
+
+      %li.nav-header
+        Payment
+
+      %li
+        = link_to 'Reports', admin_payment_reports_path
+      %li
+        = link_to 'Rates', admin_payment_rates_path
+
+      %li.nav-header
+        Statistics
+
+      %li
+        = link_to 'Approved accounts', admin_approved_accounts_path
+      %li
+        = link_to 'Proxy ip address', admin_proxy_ips_path
+      %li
+        = link_to 'Exceptions', admin_exceptions_path
+      %li
+        = link_to 'Notifications', admin_notifications_path
+      %li
+        = link_to 'Scraper info', admin_scraper_infos_path
+      %li
+        = link_to 'HTML examples', admin_html_examples_path
+      %li
+        = link_to 'Response Count', admin_response_counts_path
+      %li
+        = link_to 'Statistic', admin_statistics_path
+      %li
+        = link_to 'Antengo Statistic', antengo_admin_statistics_path
+      %li
+        = link_to admin_live_lovelies_path do
+          LiveLovely
+          %span.label.label-info
+            CRAIG
+      %li
+        = link_to admin_source_accounts_path do
+          Count source_account
+          %span.label.label-info
+            CRAIG
+      %li
+        = link_to admin_empty_timestamps_path do
+          Empty timestamps
+          %span.label.label-info
+            CRAIG
+      %li
+        = link_to 'System Events', controller: 'admin/system_events'
+      %li
+        = link_to 'Quality Statistics', admin_quality_statistics_path
+      %li
+        = link_to 'Latency Statistics', admin_latency_statistics_path
+      %li
+        = link_to 'Insert Profilers', admin_insert_profilers_path
+
+      %li.nav-header
+        Under development
+
+      %li
+        = link_to 'Incomplete annotations', 'javascript:void(0);' # incomplete_annotations_admin_quality_statistics_path
+
+      %li
+        = link_to 'Compliances Management', 'javascript:void(0);' #admin_compliances_path

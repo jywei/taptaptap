@@ -1,0 +1,72 @@
+:javascript
+  $(function() {
+    $('#hours-slider').slider({
+      value: #{params[:hours] || 1},
+      min: 1,
+      max: 7 * 24
+    }).on('slide', function(evt) {
+      updateColors();
+    });
+
+    updateColors();
+    updateCurrentTime();
+
+    setInterval(updateCurrentTime, 1000);
+  });
+
+.container
+  %h4
+    Last date for ZIPs for source
+    = @sourse
+
+  %div
+    %strong
+      Time now:
+      %span#current_time
+
+  .row
+    .span12
+      &nbsp;
+
+  .row
+    .span6.text-right
+      Hours ago:
+
+    .span6
+      #hours-slider
+
+  .row
+    .span12
+      &nbsp;
+
+  %ul.nav.nav-tabs
+    %li.active
+      %a{ "href" => "#zips_present", "data-target" => "#zips_present", "data-toggle" => "tab" }
+        Present
+
+    %li
+      %a{ "href" => "#zips_missing", "data-target" => "#zips_missing", "data-toggle" => "tab" }
+        Missing
+
+  .tab-content
+    #zips_present.tab-pane.active
+      %strong
+        Total: #{ @present_zips.size }
+
+      %ul
+        - @present_zips.each do |zip, date|
+          %li
+            %strong
+              = zip
+
+            %span.color-plate{ 'data-timestamp' => date }
+              = "#{ time_ago_in_words(date) } ago (#{ date })"
+
+    #zips_missing.tab-pane
+      %strong
+        Total: #{ @missing_zips.size }
+
+      %ul
+        - @missing_zips.each do |zip|
+          %li
+            = zip

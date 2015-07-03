@@ -1,0 +1,33 @@
+%form.well.form-inline.form-horizontal.input-daterange{ action: admin_payment_reports_path, style: "padding:7px" }
+  .row
+    .span6
+      .control-group
+        %label.control-label
+          Direction
+        .controls
+          = select_tag "direction", options_for_select([ ['Polling', 'out'], ['Posting', 'in'], ['Search', 'search'] ], @direction)
+
+      .control-group
+        %label.control-label
+          Source
+        .controls
+          = select_tag "source", options_for_select(@sources.map{|k,v| [v,k]}, @source)
+
+      .control-group
+        %label.control-label
+          Date from
+        .controls
+          %input.input-small{ :type => "text", :name => 'start_date', :value => @start_date }
+      .control-group
+        %label.control-label
+          To
+        .controls
+          %input.input-small{ :type => "text", :name => 'end_date', :value => @end_date }
+      .control-group
+        %label.control-label
+        .controls
+          %button.btn.btn-primary{ type: 'submit' } Show
+    .span5.text-right
+      %a.btn{ :href => admin_payment_rates_path }
+        %i.icon-cog
+        Rates

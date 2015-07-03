@@ -1,0 +1,67 @@
+.container
+  .row.text-center
+    %h1 Exchange Posting Marketplace
+
+    %table.table.table-bordered
+      %thead
+        %tr
+          %th{ rowspan: 2 } Category group
+          %th.span3{ rowspan: 2 } Source
+          %th.span2{ rowspan: 2 } # Daily Postings
+          %th{ rowspan: 2 } Cost Per Posting
+          %th{ rowspan: 2 } Daily Cost All
+          %th{ rowspan: 2 } Last Monthly Cost
+          %th{ rowspan: 2 } Bounty Per New Posting
+          %th{ colspan: 2 } Total Bounty Paid
+        %tr
+          %th Per Day
+          %th Per Month
+
+      %tbody
+        - @data.each do |category_group, group_data|
+          - next if category_group.blank?
+          %tr
+            %td{ rowspan: group_data.size + 1 }
+              = link_to @groups[category_group], category_group_path(category_group)
+            %td{ colspan: 8 }
+              &nbsp;
+
+          - group_data.each do |source, rows|
+            - next if source.blank?
+            - rows.each_with_index do |row, index|
+              - if index == 0
+                %tr
+                  %td{ rowspan: rows.size }
+                    = @sources.keys.include?(source) ? @sources[source] : source
+                  %td
+                    %span
+                      = number_with_delimiter row['in_daily_amount'].to_i
+                    %br
+                    %span
+                      = number_to_human_size row['in_data_size'].to_i
+                    %br
+                    %span
+                      = "avg. #{number_to_human_size row['in_avg_data_size'].to_i} per posting"
+                  %td= number_to_currency @rates[category_group][source].to_f, precision: 4
+                  %td= number_to_currency (row['in_daily_amount'].to_i * @rates[category_group][source].to_f), precision: 2
+                  %td= number_to_currency (row['in_monthly_amount'].to_i * @rates[category_group][source].to_f), precision: 2
+                  %td= number_to_currency @bounty_per_posting, precision: 4
+                  %td= number_to_currency (@bounty_per_posting * row['out_daily_amount'].to_i), precision: 2
+                  %td= number_to_currency (@bounty_per_posting * row['out_monthly_amount'].to_i), precision: 2
+              - else
+                %tr
+                  %td
+                    %span
+                      = number_with_delimiter row['in_daily_amount'].to_i
+                    %br
+                    %span
+                      = number_to_human_size row['in_data_size'].to_i
+                    %br
+                    %span
+                      = "avg. #{number_to_human_size row['in_avg_data_size'].to_i} per posting"
+                  %td= number_to_currency @rates[category_group][source].to_f, precision: 4
+                  %td= number_to_currency (row['in_daily_amount'].to_i * @rates[category_group][source].to_f), precision: 2
+                  %td= number_to_currency (row['in_monthly_amount'].to_i * @rates[category_group][source].to_f), precision: 2
+                  %td= number_to_currency @bounty_per_posting, precision: 4
+                  %td= number_to_currency (@bounty_per_posting * row['out_daily_amount'].to_i), precision: 2
+                  %td= number_to_currency (@bounty_per_posting * row['out_monthly_amount'].to_i), precision: 2

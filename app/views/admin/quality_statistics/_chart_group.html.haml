@@ -1,0 +1,17 @@
+.row-fluid.total
+  .span12.text-center
+    %h3 Total
+
+    = column_chart qualities[:total], @chart_options
+
+.row-fluid.by_sources
+  .span12.text-center
+    %h3 By source
+
+    = column_chart qualities[:by_sources], @chart_options
+
+.row-fluid.by_ips
+  .span12.text-center
+    %h3 By IP
+
+    = column_chart qualities[:by_ips], @chart_options

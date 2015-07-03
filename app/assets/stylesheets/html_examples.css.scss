@@ -1,0 +1,27 @@
+// Place all the styles related to the posting_html_examples controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.new-posting-example{
+
+	p{
+	  margin-left: 3px; 
+	  font-weight: bold;
+  }
+	.group{
+		margin-top: 10px;
+		label{
+			float: left;
+			margin-right: 10px;
+		}
+		input{
+			width: 470px;		
+	  }
+	  textarea{
+	    width: 470px;
+	    height: 400px;
+	  }
+	}
+}
+.message{
+	color: red;
+}	

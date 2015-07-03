@@ -1,0 +1,76 @@
+:scss
+  #status_values,
+  #state_values,
+  #flagged_status_values,
+  #status_values > div,
+  #state_values > div,
+  #flagged_status_values > div
+  {
+    margin-bottom: 5px;
+  }
+
+
+:javascript
+  window.add_field = function(container, field_name) {
+    html = "<div class='span5'><input type='text' name='" + field_name + "' /> <span class='btn btn-small btn-danger remove_value'>Remove</span></div>"
+    $(container).append(html);
+  };
+
+  $(document).ready(function(){
+    $('body').on('click', '.remove_value', function(e) {
+      $(this).parent().remove();
+      e.preventDefault();
+    });
+
+    $('#add-convert-status').click(function(e) {
+      add_field("#status_values", "converter[convert_status_values][]");
+      e.preventDefault();
+    });
+
+    $('#add-state-value').click(function(e) {
+      add_field("#state_values", "converter[convert_state_values][]");
+      e.preventDefault();
+    });
+
+    $('#add-flagged-status-value').click(function(e) {
+      add_field("#flagged_status_values", "converter[convert_flagged_status_values][]");
+      e.preventDefault();
+    });
+  });
+
+.row
+  .span12
+    .control-group
+      = f.label :source, :class => 'control-label'
+
+      .controls
+        - if action_name == 'new'
+          = f.select(:source, @sources, { multiple: true, size: 5, disabled: true })
+        - else
+          = f.text_field :source , {disabled: true}
+
+.row
+  .span6
+    %h4 Status
+    = render 'status', f: f
+
+    %h4 State
+    = render 'state', f: f
+
+    %h4 Flagged status
+    = render 'flagged_status', f: f
+
+  .span6
+    %h4 Category
+    = render 'category', f: f
+
+    %h4 Category group
+    = render 'category_group', f: f
+
+    %h4 Geolocation module
+    = render 'geolocation_module', f: f
+
+.row
+  .span12.text-center
+    - submit_title = (action_name == 'edit') ? 'Update converter' : 'Create converter'
+    = f.submit submit_title, class: 'btn btn-large btn-primary'

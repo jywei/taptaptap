@@ -1,0 +1,1 @@
+ActiveRecord::Migrator.migrations_paths = ['db/migrate/taps']

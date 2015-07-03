@@ -1,0 +1,22 @@
+table.table {
+  td,th {
+    font-size:11px;
+  }
+}
+
+.table_group {
+    width: 100%;
+    display: table;
+    .table_row {
+      display: table-row;
+      .table_cell {
+        display: table-cell;
+        padding: 0px 5px;
+        text-align: center;
+      }
+    }
+  }
+
+#direction {
+  width: 100px;
+}

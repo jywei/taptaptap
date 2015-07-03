@@ -1,0 +1,8 @@
+.container
+  = render_breadcrumbs
+
+  %h3 New converter
+
+  .container
+    = form_for(@converter, url:admin_converters_path, html: {role: "form"}) do |f|
+      = render 'fields', f: f

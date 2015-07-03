@@ -1,0 +1,51 @@
+.control-group
+  = f.label :use_accept_flagged_status, :class => 'control-label'
+
+  .controls
+    = f.check_box :use_accept_flagged_status
+
+.control-group
+  = f.label :accept_flagged_status, :class => 'control-label'
+
+  .controls
+    = f.select(:accept_flagged_status, @flagged_statuses, { include_hidden: false }, { multiple: true, size: 3 })
+
+.control-group
+  = f.label :convert_flagged_status, :class => 'control-label'
+
+  .controls
+    = f.check_box :convert_flagged_status
+
+.control-group
+  = f.label :flagged_status, :class => 'control-label'
+
+  .controls
+    = f.select(:flagged_status, @flagged_statuses )
+
+.control-group
+  = f.label :convert_flagged_status_values, :class => 'control-label'
+
+  .controls
+    %span#add-flagged-status-value.btn.btn-small.btn-primary
+      Add value
+
+    .row#flagged_status_values
+      - if @converter[:convert_flagged_status_values].present?
+        - @converter[:convert_flagged_status_values].each do |val|
+          .span5
+            = text_field_tag "converter[convert_flagged_status_values][]", val
+
+            %span.btn.btn-small.btn-danger.remove_value
+              Remove
+
+.control-group
+  = f.label :use_reject_flagged_status, :class => 'control-label'
+
+  .controls
+    = f.check_box :use_reject_flagged_status
+
+.control-group
+  = f.label :reject_flagged_status, :class => 'control-label'
+
+  .controls
+    = f.select(:reject_flagged_status, @flagged_statuses, { include_hidden: false }, { multiple: true, size: 3 })

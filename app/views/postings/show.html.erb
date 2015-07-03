@@ -1,0 +1,94 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Source:</strong>
+  <%= @posting.source %>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @posting.category %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @posting.location %>
+</p>
+
+<p>
+  <strong>External:</strong>
+  <%= @posting.external_id %>
+</p>
+
+<p>
+  <strong>External url:</strong>
+  <%= @posting.external_url %>
+</p>
+
+<p>
+  <strong>Heading:</strong>
+  <%= @posting.heading %>
+</p>
+
+<p>
+  <strong>Body:</strong>
+  <%= @posting.body %>
+</p>
+
+<p>
+  <strong>Html:</strong>
+  <%= @posting.html %>
+</p>
+
+<p>
+  <strong>Expires:</strong>
+  <%= @posting.expires %>
+</p>
+
+<p>
+  <strong>Language:</strong>
+  <%= @posting.language %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @posting.price %>
+</p>
+
+<p>
+  <strong>Currency:</strong>
+  <%= @posting.currency %>
+</p>
+
+<p>
+  <strong>Images:</strong>
+  <%= @posting.images %>
+</p>
+
+<p>
+  <strong>Annotation:</strong>
+  <%= @posting.annotation %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @posting.status %>
+</p>
+
+<p>
+  <strong>Flagged:</strong>
+  <%= @posting.flagged %>
+</p>
+
+<p>
+  <strong>Deleted:</strong>
+  <%= @posting.deleted %>
+</p>
+
+<p>
+  <strong>Immortal:</strong>
+  <%= @posting.immortal %>
+</p>
+
+<%= link_to 'Edit', edit_posting_path(@posting) %> |
+<%= link_to 'Back', postings_path %>

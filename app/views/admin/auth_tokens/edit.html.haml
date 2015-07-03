@@ -1,0 +1,7 @@
+.container
+
+  %h3 Edit auth_tokeb
+.row
+  .form.form-inline
+    = form_for([:admin, @token]) do |f|
+      = render 'field', f: f

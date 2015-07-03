@@ -1,0 +1,23 @@
+:scss
+  #login-form {
+    input[type=text], input[type=password] {
+      height: 34px;
+      padding: 7px 9px;
+    }
+  }
+.well
+  .row
+    = form_tag(login_path, method: "post", autocomplete: :off, class: 'form-signin span3 offset4', id: "login-form" ) do
+      .control-group
+        %h2.form-signin-heading
+          Please sign in
+      .control-group
+        .controls
+          = text_field_tag :auth_token, @auth_token, class: "input-block-level",  placeholder: "API key", required: true
+        .controls
+          = text_field_tag :username, @username, class: "input-block-level", placeholder: "Username or email", required: true
+        .controls
+          = password_field_tag :password, nil, class: "input-block-level", placeholder: "Password", required: true
+      .control-group
+        .controls.text-center
+          = submit_tag('Sign in', class: 'btn btn-primary btn-large btn-block')

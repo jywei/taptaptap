@@ -1,0 +1,38 @@
+!!!
+%html
+  %head
+    %title 3taps
+
+    = stylesheet_link_tag    "admin_application", media: "all"
+    = stylesheet_link_tag    "payments"
+
+    = javascript_include_tag "admin_application"
+    = javascript_include_tag "payments"
+
+    = csrf_meta_tags
+  %body
+    .navbar
+      .navbar-inner
+        %a.brand{ href: payment_home_path } 3taps
+        %ul.nav.pull-right
+          %li.pull-right
+            %a{ href: '/' } Home
+          - if session[:client] && session[:client].is_admin?
+            %li
+              %a{ href: contracts_path } Contracts
+
+          - if session[:client] && session[:client].authenticated?
+            %li
+              %a{ href: demand_source_rates_path } My rates
+
+            %li.pull-right
+              %a{ href: logout_path } Logout
+          - else
+            %li.pull-right
+              %a{ href: login_path } Login
+
+
+    .container
+      = bootstrap_flash
+      = render_breadcrumbs
+      = yield

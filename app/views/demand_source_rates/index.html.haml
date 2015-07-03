@@ -1,0 +1,77 @@
+:scss
+  table.table {
+    td,th {
+      font-size:10px;
+    }
+    .table_group {
+      width: 100%;
+      display: table;
+      .table_row {
+        display: table-row;
+        .table_cell {
+          display: table-cell;
+          padding: 0px 5px;
+          text-align: center;
+        }
+      }
+    }
+  }
+  #direction {
+    width: 100px;
+  }
+
+.container
+  .well
+    .span10
+      %form.form-inline{ action: demand_source_rates_path, method: 'get' }
+        .row
+          .span10
+            %label.control-label
+              Type
+              = select_tag "direction", options_for_select([ ['Polling', 'out'], ['Search', 'search'] ], @direction), onchange: 'this.form.submit()'
+.row
+  %table.table.table-bordered.table-hover.span12
+    %thead
+      %tr
+        %th.span3
+          Source
+        %th.span2
+          Rate
+          %i
+            ($ per posting)
+        %th.span1
+          All groups
+        %th{style: 'text-align: center'}
+          Rates for groups
+          %i
+            ($ per posting)
+          = " / Available groups"
+        %th.span2
+          Max sum
+          %i
+            ($)
+        %th.span1
+    %tbody
+    - @available_groups.each do |code, groups|
+      %tr
+        %td
+          = @sources[code]
+        %td
+          = number_with_delimiter @source_rates[code].rate
+        %td
+          = @source_rates[code].all_groups ? 'Yes' : 'No'
+        %td
+          - if code == "CRAIG" && @source_rates[code].all_groups == false
+            .table_group
+              .table_row
+                - @source_rates[code].demand_group_rates.each do |row|
+                  .table_cell
+                    = @groups[row.group]
+                    %br
+                    = number_with_delimiter(row.rate)
+          - else
+            = @groups.select{|code, name| groups.include?(code)}.values.join(", ")
+        %td
+          = number_with_delimiter @source_rates[code].max_sum
+        %td
+          = link_to 'Edit', edit_demand_source_rate_path(@source_rates[code]), class: 'btn btn-primary btn-small'

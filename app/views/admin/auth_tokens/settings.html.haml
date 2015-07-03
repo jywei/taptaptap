@@ -1,0 +1,11 @@
+.container
+
+  %h3 Auth tokens settings
+
+  .row
+    .span6
+      = form_for [:admin, @token] do |f|
+        =f.label "Select sources:"
+        = f.select :sources, @sources.sort, {}, multiple: true, size: @sources.size
+        %br
+        = f.submit :save, class: "btn btn-primary btn-middle"  

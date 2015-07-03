@@ -1,0 +1,47 @@
+- flash.each do |name, msg|
+  .message{style: 'color: red;'}= msg
+- if PostingExample.first.blank?
+  no examples present, sorry
+- else
+  = form_tag admin_compliances_path do
+    Example:
+    = select_tag 'posting_example_id', options_from_collection_for_select(PostingExample.all, :id, :source, @example.try(:id)), :prompt => "Please select"
+    = submit_tag 'Select'
+    - if @example
+      %br
+      Source code:
+      = text_field_tag 'source_code', @example.source_code
+      = submit_tag "Assign"
+      %br
+      %br
+      URL for the posting sample:
+      %br
+      = @example.url
+      %br
+      %br
+      Body for the posting sample:
+      %br
+      = text_area_tag 'text', @example.posting.to_json, style: 'width: 1000px; min-height: 200px;', disabled: true
+      %br
+      %br
+      - if @json
+        %table
+          %tr
+            %td
+            %td &nbsp;
+            %td= submit_tag 'Save'
+            %td{style: 'width:150px;'}
+          = render partial: 'compliance_key', collection: @json.keys
+        %br
+        = render partial: 'ruby_code'
+      - else
+        = submit_tag 'Analyze'
+
+:coffee
+  $(document).ready ->
+    $("select.select_field").change (x)->
+      annotation_field = $(x.currentTarget).parent().parent().find("input[id^=annotation_field_]")
+      if $(x.currentTarget).find(":selected").text() is 'annotations'
+        $(annotation_field).show()
+      else
+        $(annotation_field).hide().val('')

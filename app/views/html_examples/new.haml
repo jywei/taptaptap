@@ -1,0 +1,25 @@
+%h1 New Posting Example (HTML)
+= form_for @html_example, html: { class: 'form-horizontal' } do |f|
+  %fieldset
+    .control-group
+      = f.label :name, class: 'control-label'
+      .controls
+        = f.text_field :name
+    .control-group
+      = f.label :url, class: 'control-label'
+      .controls
+        = f.text_field :url, style: ''
+    .control-group
+      = f.label :committer, class: 'control-label'
+      .controls
+        = f.text_field :committer
+    .control-group
+      = f.label :comment, class: 'control-label'
+      .controls
+        = f.text_field :comment
+    .control-group
+      = f.label :html, class: 'control-label'
+      .controls
+        = f.text_area :html
+    .form-actions
+      = f.submit 'Send', class: 'btn btn-primary'

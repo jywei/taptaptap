@@ -1,0 +1,72 @@
+:javascript
+  $(function() {
+    $('#hours-slider').slider({
+      value: #{params[:hours] || 1},
+      min: 1,
+      max: 7 * 24
+    }).on('slide', function(evt) {
+      updateColors();
+    });
+
+    updateColors();
+    updateCurrentTime();
+
+    setInterval(updateCurrentTime, 1000);
+  });
+
+.container
+  %h4
+    Last date for Carmakers for source
+    = @sourse
+
+  %div
+    %strong
+      Time now:
+      %span#current_time
+
+  .row
+    .span12
+      &nbsp;
+
+  .row
+    .span6.text-right
+      Hours ago:
+
+    .span6
+      #hours-slider
+
+  .row
+    .span12
+      &nbsp;
+
+  %ul.nav.nav-tabs
+    %li.active
+      %a{ "href" => "#present_carmakers", "data-target" => "#present_carmakers", "data-toggle" => "tab" }
+        Present
+
+    %li
+      %a{ "href" => "#missing_carmakers", "data-target" => "#missing_carmakers", "data-toggle" => "tab" }
+        Missing
+
+  .tab-content
+    #present_carmakers.tab-pane.active
+      %strong
+        Total: #{ @present_carmakers ? @present_carmakers.size : 0 }
+
+      %ul
+        - @present_carmakers.each do |carmaker, date|
+          %li
+            %strong
+              = carmaker
+
+            %span.color-plate{ 'data-timestamp' => date }
+              = "#{ time_ago_in_words(date) } ago (#{ date })"
+
+    #missing_carmakers.tab-pane
+      %strong
+        Total: #{  @missing_carmakers ? @missing_carmakers.size : 0}
+
+      %ul
+        - @missing_carmakers.each do |carmaker|
+          %li
+            = carmaker

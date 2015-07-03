@@ -1,0 +1,57 @@
+:javascript
+  $(document).ready(function(){
+      $("#demand_source_rate_all_groups").click(function(){
+          if ($(".group_field").hasClass("hidden")){
+              $(".group_field").removeClass("hidden");
+
+              $("#demand_source_rate_rate").attr("required", false);
+          } else {
+              $(".group_field").addClass("hidden");
+
+              $(".select_group input[type=checkbox]").each(function(){
+                $(this).attr("checked", false).change();
+              })
+
+              $("#demand_source_rate_rate").attr("required", true);
+          }
+      });
+
+  });
+.container
+  - regexp = "([0-9]+[.|,][0-9])|([0-9][.|,][0-9]+)|([0-9]+)"
+  = form_for(@source_rate, html: { class: 'form-horizontal well' }) do |f|
+    .row
+      %table.span5
+        %tr
+          %th{colspan:2}
+            Source:
+            = @sources[@source_rate.source]
+        %tr
+          %td.span1
+            = f.label :max_sum, class: "control-label check_box"
+          %td.span2
+            = f.text_field :max_sum, class: "input-small", required: "required", pattern: regexp
+            %i
+              ($)
+        %tr
+          %td.span1
+            = f.label :rate, class: "control-label check_box"
+          %td.span2
+            = f.text_field :rate,  class: "input-small", required: "required", pattern: regexp
+            %i
+              ($ per posting)
+        - if @source_rate.source == "CRAIG"
+          %tr
+            %td
+              = f.label :all_groups, class: "control-label check_box"
+            %td
+              = f.check_box :all_groups
+          = f.fields_for :demand_group_rates do |builder|
+            %tr.group_field{ class: "#{ @source_rate.all_groups ? 'hidden' : '' }"}
+              %td.span1
+                = builder.label :rate, @groups[builder.object.group], class: "control-label"
+              %td.span2
+                = builder.text_field :rate, class: "input-small", pattern: regexp
+                ($ per posting)
+      .controls
+        = f.submit class: "btn btn-success"

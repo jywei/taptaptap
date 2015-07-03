@@ -1,0 +1,39 @@
+.container
+  %h3 Last postings having #{ @quality_attribute.humanize.downcase } between #{ @quality_lower } and #{ @quality_upper }
+
+  %table.table.table-bordered.table-hover
+    %thead
+      %tr
+        %th ID
+        %th Source
+        %th Category
+        %th Category group
+        %th Transit IP address
+        %th Fields quality
+        %th Missing fields
+
+    %tbody
+      - @postings.each do |posting|
+        %tr
+          %td
+            = posting[:id]
+
+          %td
+            = link_to posting[:source], postings_with_quality_admin_quality_statistics_path(:lower => @quality_lower, :upper => @quality_upper, :source => posting[:source])
+
+          %td
+            = posting[:category]
+
+          %td
+            = posting[:category_group]
+
+          %td
+            = posting[:transit_ip_address]
+
+          %td
+            = posting[:fields_quality]
+
+          %td
+            = missing_fields_of(posting).join(', ')
+
+  = paginate @postings

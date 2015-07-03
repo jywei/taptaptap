@@ -1,0 +1,9 @@
+%tr{class: "#{(event.event_code == 1) ? "green_row" : "red_row"}"}
+  %td
+    = event.message
+  %td
+    = event.event_code
+  %td
+    = event.source
+  %td
+    = "#{ time_ago_in_words(event.created_at) } ago"    

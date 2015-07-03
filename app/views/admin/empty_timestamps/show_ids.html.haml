@@ -1,0 +1,16 @@
+%h3
+  Postings with empty timestamp for #{ @date }
+
+.container
+  .row-fluid
+    = link_to "To chart", admin_empty_timestamps_path, class: "btn btn-middle btn-primary"
+
+  .row-fluid
+    .span12
+
+  .row-fluid
+    .span6
+      = render partial: 'id', collection: @ids
+
+    .span12
+      = paginate @ids

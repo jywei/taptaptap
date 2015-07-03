@@ -1,0 +1,1 @@
+json.extract! @posting, :source, :category, :location, :external_id, :external_url, :heading, :body, :html, :expires, :language, :price, :currency, :images, :annotation, :status, :flagged, :deleted, :immortal, :created_at, :updated_at

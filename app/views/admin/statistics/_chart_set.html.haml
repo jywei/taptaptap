@@ -1,0 +1,22 @@
+- @dates.rewind
+
+.row-fluid
+  - first_series = series.shift
+
+  = render partial: 'chart', locals: { chart_options: @chart_options, series_data: first_series, dates: @dates, span_size: 12 }
+
+- if added.has_key?(:long_term_data)
+  .row-fluid
+    .span4
+      = column_chart @series[:by_long_term][:prev_week], @chart_options.deep_merge({ library: { title: { text: "Previous week" }}})
+    .span4
+      = column_chart @series[:by_long_term][:prev_month], @chart_options.deep_merge({ library: { title: { text: "Previous month" }}})
+    .span4
+      = column_chart @series[:by_long_term][:august], @chart_options.deep_merge({ library: { title: { text: "August" }}})  
+
+- series.in_groups_of(@group_size) do |group|
+  .row-fluid
+    - group.compact!
+    - group.each do |series_data|
+      /- if series_data.any? { |e| e[:data].size > 0 }
+      = render partial: 'chart', locals: { series_data: series_data, span_size: (12 / group.size) }

@@ -1,0 +1,16 @@
+.container
+  .row
+    %table.table.table-bordered.table-hover.span6
+      %tr
+        %th.head
+          Id
+        %th.head
+          Proxy ip address
+      - @postings.each do |posting|
+        %tr
+          %td
+            = posting.id
+          %td
+            = posting.proxy_ip_address
+  .row.text-center
+    = paginate @postings

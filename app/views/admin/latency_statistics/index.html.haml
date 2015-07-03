@@ -1,0 +1,52 @@
+:javascript
+
+  window.config = {
+      update_latency_path : "#{admin_update_latency_offset_path }",
+      latency_offset: "#{@latency_offset}",
+
+      min_day: "#{ @min_day }",
+      max_day: "#{ @max_day }",
+      default_day: "#{ @default_day }",
+
+      min_month: "#{ @min_month }",
+      max_month: "#{ @max_month }",
+      default_month: "#{ @default_month }",
+
+      periods: ["hourly", "daily", "monthly"],
+      urls: {
+          "hourly": "#{admin_latency_hourly_path}",
+          "daily": "#{admin_latency_daily_path}",
+          "monthly": "#{admin_latency_monthly_path}",
+          "day_hourly": "#{admin_latency_day_hourly_path}" 
+      }
+  }; 
+
+= javascript_include_tag "highcharts", "chartkick", "admin/latency_statistic"
+.container
+  %h3 Average latency Statistics
+  .row-fluid.total.text-right
+    = render 'change_offset' 
+  .row-fluid.total
+    %ul.nav.nav-tabs
+      %li.active
+        %a{ "href" => "#latency_hourly", "data-target" => "#latency_hourly", "data-toggle" => "tab" }
+          Hourly
+      %li
+        %a{ "href" => "#latency_daily", "data-target" => "#latency_daily", "data-toggle" => "tab" }
+          Daily
+      %li
+        %a{ "href" => "#latency_monthly", "data-target" => "#latency_monthly", "data-toggle" => "tab" }
+          Monthly
+      %li
+        %a{ "href" => "#latency_lineal", "data-target" => "#latency_lineal", "data-toggle" => "tab" }
+          Lineal        
+  .tab-content      
+    - @series.each do |title, latencies| 
+      - if title.to_s == "hourly" 
+        .tab-pane.active{id: "latency_#{title}"}
+          = render partial: "chart", locals: { latencies: latencies, title: title }
+      - else        
+        .tab-pane{id: "latency_#{title}"}
+          = render partial: "chart", locals: { latencies: latencies, title: title } 
+    .tab-pane{id: "latency_lineal"}
+      = render partial: "lineal_charts"    

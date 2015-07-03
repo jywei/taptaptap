@@ -1,0 +1,14 @@
+.container
+  = render_breadcrumbs
+
+  %h3 Converters
+
+  .row
+    .span12
+      = link_to "Add converter", new_admin_converter_path, class: "btn btn-middle btn-primary"
+
+  .row
+    .span12
+      &nbsp;
+
+  = render partial: 'converter', collection: @converters

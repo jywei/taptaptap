@@ -1,0 +1,20 @@
+.container
+  %h3
+    Count source_account(CRAIG only)
+  .row-fluid
+    %strong
+      Volume: 
+    #{ @volume } 
+  %table{"cellpadding" => "5px;" }
+    %thead{style: "color: #0088cc"}
+      %tr
+        %th
+          Total count
+        %th
+          Count with source_account
+    %tbody{style: "font-weight: bold"}
+      %tr
+        %td
+          = @total_count["total"]
+        %td
+          = @count_with_source_account["total"]         

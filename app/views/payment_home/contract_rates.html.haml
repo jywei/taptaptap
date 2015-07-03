@@ -1,0 +1,53 @@
+.container
+  .well
+    .span10
+      %form.form-inline{ action: contract_rates_path(@auth_token), method: 'get' }
+        .row
+          .span10
+            %label.control-label
+              Type
+              = select_tag "direction", options_for_select([ ['Polling', 'out'], ['Search', 'search'] ], @direction), onchange: 'this.form.submit()'
+
+.row
+  %table.table.table-bordered.table-hover.span12
+    %thead
+      %tr
+        %th.span3
+          Source
+        %th.span2
+          Rate
+          %i
+            ($ per posting)
+        %th.span1
+          All groups
+        %th{style: 'text-align: center'}
+          Rates for groups
+          %i
+            ($ per posting)
+          = " / Available groups"
+        %th.span2
+          Max sum
+          %i
+            ($)
+    %tbody
+    - @client_rates.each do |rate|
+      %tr
+        %td
+          = @sources[rate.source]
+        %td
+          = number_with_delimiter rate
+        %td
+          = rate.all_groups ? 'Yes' : 'No'
+        %td
+          - if code == "CRAIG" && rate.all_groups == false
+            .table_group
+              .table_row
+                - rate.demand_group_rates.each do |row|
+                  .table_cell
+                    = @groups[row.group]
+                    %br
+                    = number_with_delimiter(row.rate)
+          - else
+            = @groups.select{|code, name| groups.include?(code)}.values.join(", ")
+        %td
+          = number_with_delimiter rate.max_sum

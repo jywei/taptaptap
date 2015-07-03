@@ -1,0 +1,8 @@
+.container
+  = render_breadcrumbs
+
+  %h3 Edit converter
+
+  .container
+    = form_for([:admin, @converter], html: { role: 'form', class: 'form-horizontal' }) do |f|
+      = render 'fields', f: f

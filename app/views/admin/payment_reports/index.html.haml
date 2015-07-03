@@ -1,0 +1,16 @@
+:javascript
+  $(document).ready(function() {
+    $('.input-daterange').datepicker({
+        format: "yyyy/mm/dd",
+        autoclose: true
+    });
+  });
+
+.container
+  = render partial: 'form'
+
+  - if @source.present?
+    - if @direction == 'search'
+      = render partial: 'search'
+    - else
+      = render partial: 'invoice'

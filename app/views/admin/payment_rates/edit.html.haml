@@ -1,0 +1,80 @@
+:javascript
+  $(document).ready(function(){
+      $("#payment_rate_all_groups").click(function(){
+          if($(this).prop("checked")){
+              $("#groups").hide();
+          } else {
+              $("#groups").show();
+          }
+      });
+
+      $(".show_categories").click(function(){
+          var category_group = $(this).attr('category-group');
+          if($(this).prop("checked")){
+            $("div [row-category-group=" + category_group + "]").hide();
+            $(".update_button [category-group=" + category_group + "]").hide();
+          } else {
+            $("div [row-category-group= " + category_group + "]").show();
+            $(".update_button [category-group=" + category_group + "]").show();
+          }
+      });
+
+      $(".update_categories_rates").click(function(){
+        var category_group = $(this).attr("category-group");
+        var inputs = $("div [row-category-group="+  category_group +"] input");
+
+        $.post("#{admin_update_categories_rates_path}", inputs.serialize())
+        return false;
+      });
+
+  });
+
+= stylesheet_link_tag 'admin/payments'
+
+.container
+  = form_for([:admin, @rate], html: { role: 'form', class: 'form-horizontal well' }) do |f|
+    .control-group
+      %label.control-label
+        Source
+      .controls
+        %strong
+          = @sources[@rate.source]
+    .control-group
+      = f.label :rate, class: "control-label"
+      .controls
+        = f.text_field :rate, class: "input-small"
+        %i
+          ($ per posting)
+    .control-group
+      = f.label "Use this rate for all groups", for: "payment_rate_all_groups", class: "control-label check_box"
+      .controls
+        = f.check_box :all_groups, class: "control"
+
+    #groups.control-group{class: "#{ @rate.all_groups ? "hide": '' }"}
+      = f.fields_for :payment_group_rates do |builder|
+        .control-group
+          = builder.label :rate, @groups[builder.object.category_group], class: "control-label"
+          .controls
+            .span3
+              = builder.text_field :rate, class: "input-small"
+              ($ per posting)
+            .span2
+              %label
+                = builder.check_box :all_categories, class: 'show_categories', 'category-group' => "#{builder.object.category_group}"
+                = " All Categories"
+            .span2.update_button
+              %button.btn.btn-success.update_categories_rates{ 'category-group' => "#{builder.object.category_group}", class: "#{ builder.object.all_categories ? 'hide' : '' }" }
+                = "Update rates"
+        .well{ class: "#{ builder.object.all_categories ? 'hide' : '' }", 'row-category-group' => "#{builder.object.category_group}" }
+          .row
+            - builder.object.payment_category_rates.each do |category_rate|
+              .span2
+                = @categories_names[category_rate.category]
+                %br
+                = text_field_tag "payment_categories_rates[#{category_rate.id}]", category_rate.rate, class: "input-small"
+        %br
+    %br
+    .control-group
+      .controls
+        = f.submit class: "btn btn-success"
+    %br

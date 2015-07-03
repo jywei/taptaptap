@@ -1,0 +1,17 @@
+= link_to 'Back', admin_path
+%br
+%br
+%table
+  %thead
+    %th Type
+    %th Date
+    %th Status
+    %th
+  %tbody
+    - @notifications.each do |notification|
+      - present notification, NotificationPresenter do |p|
+        %tr{ class: p.sent? ? 'sent' : 'not-sent' }
+          %td= p.type
+          %td= p.created_at.strftime('%D %T')
+          %td= p.status
+          %td= link_to('Resend', admin_notification_path(notification), method: 'put') if p.sent?

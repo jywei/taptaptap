@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell ss:MergeAcross="1"><Data ss:Type="String">Latency</Data></Cell>
+        <Cell ss:MergeDown="1"><Data ss:Type="String">Postings</Data></Cell>
+        <Cell ss:MergeDown="1"><Data ss:Type="String">%</Data></Cell>
+      </Row>
+      <Row>
+        <Cell><Data ss:Type="String">From</Data></Cell>
+        <Cell><Data ss:Type="String">To</Data></Cell>
+        <Cell></Cell>
+        <Cell></Cell>
+      </Row>
+
+    <% rows.each do |row| %>
+      <Row>
+        <Cell><Data ss:Type="Number"><%= row['startrange'] %></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= row['endrange'] < 5_000_000 ? row['endrange'] : '∞' %></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= row['postings'] %></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= row['percentage'] %></Data></Cell>
+      </Row>
+    <% end %>
+
+    </Table>
+  </Worksheet>
+</Workbook>

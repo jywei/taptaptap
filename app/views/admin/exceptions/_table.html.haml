@@ -1,0 +1,54 @@
+:javascript
+  $(function() {
+    $('a[data-exception-id]').click(function() {
+      var that = $(this),
+        id = that.attr('data-exception-id');
+
+      $.getJSON('/admin/exceptions/' + id + '/details', function(data) {
+        $('#details-modal-label').html(data['title']);
+        $('#details-modal-body').html(data['details']);
+
+        $('#details-modal').modal('show');
+      });
+    });
+  });
+
+#details-modal.modal.hide.fade{ "tabindex" => "-1", "role" => "dialog", "aria-labelledby" => "myModalLabel", "aria-hidden" => "true" }
+  .modal-header
+    %button.close{ "type" => "button", "data-dismiss" => "modal", "aria-hidden" => "true" }
+      ×
+
+    %h3#details-modal-label
+
+  .modal-body#details-modal-body
+
+  .modal-footer
+    %button.btn{ "data-dismiss" => "modal", "aria-hidden" => "true" }
+      Close
+
+%table#exceptions.table.table-hover
+  %thead
+    %tr
+      %th Exception message
+      %th Count
+      %th Caused by
+      %th Last time
+      %th Notifications
+      %th Actions
+
+  %tbody
+    - @exceptions.each do |exception|
+      %tr
+        %td
+          %a{ 'href' => '#', 'data-exception-id' => exception.id }
+            = exception.message
+        %td= exception.count
+        %td= exception.caused_by
+        %td= exception.created_at.to_s(:db)
+        %td= exception.notify
+        %td
+          = link_to "Retry last", retry_last_posting_admin_exception_path(exception)
+          |
+          = link_to "Retry all", retry_all_postings_admin_exception_path(exception)
+          |
+          = link_to "Delete", delete_admin_exception_path(exception)

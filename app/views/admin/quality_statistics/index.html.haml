@@ -1,0 +1,65 @@
+:javascript
+  window.stats_config = {
+    min_date: "#{ @min_date }",
+    max_date: "#{ @max_date }",
+    fields_path: "#{admin_fields_qualities_path}",
+    annotations_path: "#{admin_annotations_qualities_path}",
+    fields_quality_postings_path: "#{@domain_path}#{postings_with_quality_admin_quality_statistics_path(attribute: 'fields_quality')}",
+    annotations_quality_postings_path: "#{@domain_path}#{postings_with_quality_admin_quality_statistics_path(attribute: 'annotations_quality')}",
+    qualities: #{@qualities_config.to_json}
+  };
+= javascript_include_tag "highcharts", "chartkick", "admin/median_quality_statistics","admin/quality_statistic"
+
+.container
+  %h3 Quality Statistics
+
+  %form.form-inline{ action: admin_quality_statistics_path }
+    %label Period:
+
+    %span.input-daterange
+      %input.input-small{ :type => "text", :name => 'start_date', :value => @start_date }
+      %span.add-on to
+      %input.input-small{ :type => "text", :name => 'end_date', :value => @end_date }
+
+    %button.btn.btn-primary{ type: 'submit' } Show
+
+  .row
+    .span12.text-center{ style: "height: 20px" }
+      %span{ id: "zoom_buttons" }
+        %button.btn.btn-primary.back zoom out
+        %button.btn.btn-primary.reset reset zoom
+
+  .row
+    .span12
+      &nbsp;
+
+  %ul.nav.nav-tabs
+    %li
+      %a{ "href" => "#fields_quality", "data-target" => "#fields_quality", "data-toggle" => "tab" }
+        Fields quality
+
+    %li
+      %a{ "href" => "#annotations_quality", "data-target" => "#annotations_quality", "data-toggle" => "tab" }
+        Annotations quality
+
+    %li.active
+      %a{ "href" => "#combined", "data-target" => "#combined", "data-toggle" => "tab" }
+        Combined
+
+  .tab-content
+    #fields_quality.tab-pane
+      = render partial: "chart_group", locals: { qualities: @series[:fields] }
+
+    #annotations_quality.tab-pane
+      = render partial: "chart_group", locals: { qualities: @series[:annotations] }
+
+    #combined.tab-pane.active
+      .row
+        .span12
+          %div{ id: "total-qualities-chart-container" }
+
+      - (@qualities_config.keys - [ 'total' ]).in_groups_of(2, false) do |batch|
+        .row
+          - batch.each do |key|
+            %div{ class: "span6" }
+              %div{ id: "#{key}-qualities-chart-container" }

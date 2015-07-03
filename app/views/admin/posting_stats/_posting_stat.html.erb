@@ -1,0 +1,10 @@
+<tr>
+  <td><%= posting_stat.posting_id %></td>
+  <td><%= posting_stat.created_at %></td>
+  <td><%= posting_stat.located_at - posting_stat.created_at rescue '' %></td>
+  <td><%= posting_stat.located_at %></td>
+  <td><%= posting_stat.anchored_at - posting_stat.located_at rescue '' %></td>
+  <td><%= posting_stat.anchored_at %></td>
+  <td><%= posting_stat.polled_at - posting_stat.anchored_at rescue '' %></td>
+  <td><%= posting_stat.polled_at %></td>
+</tr>

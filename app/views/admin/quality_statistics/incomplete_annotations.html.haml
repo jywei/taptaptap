@@ -1,0 +1,29 @@
+.container
+  %h3 Last postings with incomplete annotations
+
+  %table.table.table-bordered.table-hover
+    %thead
+      %tr
+        %th Posting id
+        %th Quality
+        %th Missing annotations
+        %th Exceeding annotations
+
+    %tbody
+      - @postings.each do |posting|
+        - missing, exceeding = missing_and_exceeding_annotations_of posting
+
+        %tr
+          %td
+            = posting[:id]
+
+          %td
+            = posting[:annotations_quality]
+
+          %td
+            = missing.join(', ')
+
+          %td
+            = exceeding.join(', ')
+
+  = paginate @postings

@@ -1,0 +1,2 @@
+module Admin::PostingStatsHelper
+end

@@ -1,0 +1,52 @@
+= stylesheet_link_tag 'admin/payments'
+.container
+  %form.well.form-inline{ action: admin_payment_rates_path, method: 'get' }
+    .row
+      .span10
+        %label.control-label
+          Type
+          = select_tag "direction", options_for_select([ ['Polling', 'out'], ['Posting', 'in'], ['Search', 'search'] ], @direction), onchange: 'this.form.submit()'
+
+      .span
+        %a.btn{ :href => admin_payment_reports_path }
+          %i.icon-book
+          Reports
+.row
+  %table.table.table-bordered.table-hover.span12
+    %thead
+      %tr
+        %th.span3
+          Source
+        %th.span2
+          Rate
+          %i
+            ($ per posting)
+        %th.span1
+          All groups
+        %th{style: 'text-align: center'}
+          Rates for groups
+          %i
+            ($ per posting)
+        %th.span1
+    %tbody
+    -@rates.each do |row|
+      %tr
+        %td
+          = @sources[row.source]
+        %td
+          = number_with_delimiter row.rate
+        %td
+          = row.all_groups ? 'Yes' : 'No'
+        %td
+          - if row.all_groups
+            = row.payment_group_rates.map{|group_rate| @groups[group_rate.category_group] }.join(', ')
+          - else
+            .table_group
+              .table_row
+                - row.payment_group_rates.each do |group_rate|
+                  .table_cell
+                    = @groups[group_rate.category_group]
+                    %br
+                    = number_with_delimiter(group_rate.rate)
+        %td
+          = link_to 'Edit', edit_admin_payment_rate_path(row), class: 'btn btn-primary btn-small'

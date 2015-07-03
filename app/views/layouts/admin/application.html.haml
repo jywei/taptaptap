@@ -1,0 +1,15 @@
+!!!
+%html
+  %head
+    %title 3taps Backoffice
+
+    = stylesheet_link_tag    "admin_application", media: "all"
+
+    = javascript_include_tag "admin_application"
+
+    = csrf_meta_tags
+  %body
+    .container
+      = bootstrap_flash
+      = render_breadcrumbs
+      = yield

@@ -1,0 +1,21 @@
+---
+:verbose: false
+:logfile: log/sidekiq.log
+:concurrency:  25
+:strict: false
+:pidfile: tmp/pids/sidekiq.pid
+:queues:
+  - [geolocate, 2]
+development:
+  :verbose: true
+  :concurrency:  2
+  :queues:
+    - [geolocate, 2]
+staging:
+  :concurrency:  2
+  :queues:
+    - [geolocate, 2]
+production:
+  :concurrency:  6
+  :queues:
+    - [geolocate, 6]

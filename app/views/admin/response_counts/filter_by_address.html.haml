@@ -1,0 +1,10 @@
+%table.table.table-striped
+  %tr
+    %th date
+    %th count
+    %th average
+  - @rcfilter.each do |rrc|
+    %tr
+      %td= rrc[2]
+      %td= rrc[0]
+      %td= rrc[1]

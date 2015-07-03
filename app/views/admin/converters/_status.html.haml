@@ -1,0 +1,51 @@
+.control-group
+  = f.label :use_accept_status, 'Use status acceptor', :class => 'control-label'
+
+  .controls
+    = f.check_box :use_accept_status
+
+.control-group
+  = f.label :accept_status, :class => 'control-label'
+
+  .controls
+    = f.select(:accept_status, @statuses, { include_hidden: false }, { multiple: true, size: 5 } )
+
+.control-group
+  = f.label :convert_status, 'Use status converter', :class => 'control-label'
+
+  .controls
+    = f.check_box :convert_status
+
+.control-group
+  = f.label :status, :class => 'control-label'
+
+  .controls
+    = f.select(:status, @statuses)
+
+.control-group
+  = f.label :convert_status_values, :class => 'control-label'
+
+  .controls
+    %a#add-convert-status.btn.btn-small.btn-primary
+      Add value
+
+    .row#status_values
+      - if @converter[:convert_status_values].present?
+        - @converter[:convert_status_values].each do |val|
+          .span5
+            = text_field_tag "converter[convert_status_values][]", val
+
+            %span.btn.btn-small.btn-danger.remove_value
+              Remove
+
+.control-group
+  = f.label :use_reject_status, :class => 'control-label'
+
+  .controls
+    = f.check_box :use_reject_status
+
+.control-group
+  = f.label :reject_status, :class => 'control-label'
+
+  .controls
+    = f.select(:reject_status, @statuses, { include_hidden: false }, { multiple: true, size: 5 })

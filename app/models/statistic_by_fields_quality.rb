@@ -1,0 +1,2 @@
+class StatisticByFieldsQuality < StatisticBase
+end

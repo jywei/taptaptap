@@ -1,0 +1,45 @@
+:javascript
+  window.test_url = 'http://reference.3taps.com/locations';
+
+= stylesheet_link_tag 'request_builder'
+= javascript_include_tag 'request_builder'
+
+.container
+  .row
+    .span12.text-center
+      %h2 Locations query builder
+
+  %form.form-horizontal
+    .row.text-center
+      .span3
+        %input{ :type => "hidden", :name => "auth_token", :placeholder => "Your API key *", :title => "Your API key", :value => @api_key }
+
+        %input{ :type => 'hidden', :name => "level", :id => "level" }
+
+        %h4
+          Locations
+          %i
+            (step-by-step)
+
+        - %w(country state metro region county city locality zipcode).each_with_index do |field, order|
+          - level = field.gsub(/location\./, '')
+          - title = level.humanize
+          .control-group{ 'data-location-order' => order, 'data-location-level' => level }
+            %label
+              %strong
+                = title
+              %br
+              %select{ :placeholder => title, :title => title, :name => field, 'data-location-order' => order, 'data-location-level' => level }
+                %option{ :value => '' }
+                  = "select #{level}"
+      .span8.display
+        .control-group
+          %textarea.exclude{ :name => "query", :title => "Query JSON", :readonly => true, :rows => 10 }
+
+        .control-group
+          %button.btn.send
+            Test!
+
+        .control-group
+          %textarea.exclude.results{ :readonly => true, :rows => 10 }
+            Results

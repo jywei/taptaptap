@@ -1,0 +1,53 @@
+<div class="container-fluid">
+<h1>Statistics of Posting API</h1>
+<div class="row">
+  <div class="span1"><%= label_tag "During last:" %></div>
+  <div class="span1"><%= text_field_tag "time_number", params[:time_number] || 1, class: "span1" %></div>
+  <div class="span3">
+    <%= select_tag "time_type", options_for_select([["Minute", "minute"], ["Hour", "hour"], ["Day", "day"]], selected: params[:time_type] || 'hour'), autocomplete: "off" %>
+  </div>  
+  <div class="span2"><%= submit_tag "Submit", id: "submit", class: "btn btn-primary" %></div>
+</div>
+<div>
+  <span><%= "MLS: #{@remls_counts}" %></span>;
+  <span><%= "Hemmings: #{@hmngs_counts}" %></span>;
+  <span><%= "eBay Motors: #{@ebaym_counts}" %></span>;
+  <span><%= "Craigslist: #{@craig_counts}" %></span>;
+  <span><%= "Backpage: #{@bkpge_counts}" %></span>;
+</div>
+<div id="chartdiv" style="height:400px; width:1150px"></div>
+</div>
+<script type="text/javascript">
+  var options = {
+    legend: { show: true },
+    series: [
+      { label: 'MLS' },
+      { label: 'Hemmings' },
+      { label: 'eBay Motors' },
+      { label: 'Craigslist' },
+      { label: 'Backpage' }
+    ],
+    axesDefaults: {
+        tickRenderer: $.jqplot.CanvasAxisTickRenderer ,
+        tickOptions: {
+          angle: -50,
+          fontSize: '8pt'
+        }
+    },
+    axes: {
+      xaxis: {
+        renderer: $.jqplot.CategoryAxisRenderer
+      }
+    }
+  }
+  $.jqplot('chartdiv',  [
+      <%= raw(@postings_counts.map{|el| [el[:time_dot], el[:remls]]}.to_json) %>,
+      <%= raw(@postings_counts.map{|el| [el[:time_dot], el[:hmngs]]}.to_json) %>,
+      <%= raw(@postings_counts.map{|el| [el[:time_dot], el[:ebaym]]}.to_json) %>,
+      <%= raw(@postings_counts.map{|el| [el[:time_dot], el[:craig]]}.to_json) %>,
+      <%= raw(@postings_counts.map{|el| [el[:time_dot], el[:bkpge]]}.to_json) %>
+      ], options);
+  $("#submit").on("click", function(){
+    window.location = "/statistics?time_number=" + $("#time_number").val() + "&time_type=" + $("#time_type").val()
+  })
+</script>

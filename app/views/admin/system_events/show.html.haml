@@ -1,0 +1,12 @@
+%h1 System Event
+%table.table.table-bordered
+  %tr
+    %th id
+    %th event
+    %th description
+    %th Timestamp
+    %tr
+      %td= @event.id
+      %td= @event.event
+      %td= raw @event.description
+      %td= @event.created_at

@@ -1,0 +1,8 @@
+.row-fluid.total
+  .span2
+    = render partial: "date_#{title}"
+  .span10.text-center{class: "#{title}"}
+    %h3
+      = title.to_s.titleize
+      latency statistic 
+    = column_chart latencies, @chart_options

@@ -1,0 +1,19 @@
+:javascript
+  $(function(){
+    $("#generate_token").click(function(){
+      $.getJSON( "#{ admin_generate_token_path }", function( data ) {
+        $("#auth_token_token").val(data["token"]);
+      });
+    });
+  });
+
+.container
+
+  %h3 New auth_token
+.row
+  .form.form-inline
+    = form_for(@token, url: admin_auth_token_path(@token)) do |f|
+      = render 'field', f: f
+.row
+  %button.btn.btn-middle.btn-success{ id: "generate_token" }
+    Generate    

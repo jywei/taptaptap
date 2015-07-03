@@ -1,0 +1,111 @@
+%h4
+  Added postings for #{ @date.to_s }: #{ number_with_delimiter(@added_totals) }
+
+- @added_counts.each do |metric, values|
+  - if metric == :category
+    - values = sort_category_by_max_ip(values)
+
+  - @ips = get_ips(values)
+
+  - if values.present?
+    %table{ style: "margin-top: 20px; border: 1px solid #808080", cellspacing: 0, cellpadding: 0, :"border-collapse" => "collapse" }
+      %tr
+        %th{ style: "width: 80px; border: 1px solid #808080" }
+          #{ metric.to_s.humanize }
+
+        - if @ips.present?
+          - @ips.each do |ip|
+            %th{ style: "width: 100px; border: 1px solid #808080" }
+              #{ ip }
+
+      - values.each do |key, counters|
+        %tr
+          %td{ style: "border: 1px solid #808080; padding: 1px 2px;" }
+            #{ key }
+
+          - if @ips.present?
+            - @ips.each do |ip|
+              %td{ style: "text-align: right; border: 1px solid #808080; padding: 1px 2px;" }
+                - counters.each do |val|
+                  - val.each do |k, v|
+                    - if k == ip
+                      #{ number_with_delimiter(v) }
+
+      %tr
+        %th{ style: "border:1px solid #808080" }
+          Total
+
+        - if @ips.present?
+          - @ips.each do |ip|
+            %th{ style: "text-align:right; border:1px solid #808080; padding: 1px 2px;" }
+              #{ number_with_delimiter( total_by_ip(values)[ip] ) }
+
+%h4
+  Added and updated postings by source
+
+- unless @by_source.empty?
+  %table{ style: "margin-top: 20px; border: 1px solid #808080", cellspacing: 0, cellpadding: 0, :"border-collapse" => "collapse" }
+    %thead
+      %tr
+        %th{ style: "width: 80px; border: 1px solid #808080" }
+          Source
+
+        %th{ style: "width: 80px; border: 1px solid #808080" }
+          Added postings
+
+        %th{ style: "width: 80px; border: 1px solid #808080" }
+          Updated postings
+
+    %tbody
+      - @by_source.each do |source, counts|
+        %tr
+          %td{ style: "border: 1px solid #808080; padding: 1px 2px; text-align: right;" }
+            #{ source }
+          %td{ style: "border: 1px solid #808080; padding: 1px 2px; text-align: right;" }
+            #{ counts[:added] }
+          %td{ style: "border: 1px solid #808080; padding: 1px 2px; text-align: right;" }
+            #{ counts[:updated] }
+
+%h4
+  Updated postings for #{ @date.to_s }:
+
+%table{ cellspacing: 0, cellpadding: 0, style: "margin-top: 20px; border-collapse: collapse; border: 1px solid #808080;" }
+  %tr
+    %th{ style: "border: 1px solid #808080; min-width: 80px;" }
+      Source
+
+    %th{ style: "border: 1px solid #808080; min-width: 80px;" }
+      Category
+
+    %th{ style: "border: 1px solid #808080; min-width: 80px;" }
+      Amount
+
+  - total = 0
+
+  - @updated_counts.each do |data|
+    - sum = data.last.map(&:last).sum
+    - total += sum
+
+    %tr
+      %td{ style: "border: 1px solid #808080; padding: 1px 2px; text-align: center;", rowspan: data.last.count+1 }
+        #{ data.first }
+
+    - data.last.each do |category|
+      %tr
+        %td{ style: "border: 1px solid #808080; padding: 1px 2px; text-align: center;" }
+          #{ category.first }
+
+        %td{ style: "border: 1px solid #808080; padding: 1px 2px; text-align: center;" }
+          #{ category.last }
+    %tr
+      %td{ style: "border: 1px solid #808080; background-color: #B6B6B6; padding: 1px 2px; text-align: center;", colspan: 2 }
+        Total by #{ data.first }
+
+      %td{ style: "border: 1px solid #808080; background-color: #B6B6B6; padding: 1px 2px; text-align: center;" }
+        #{ sum }
+  %tr
+    %th{ style: "border: 1px solid #808080; background-color: #B6B6B6; padding: 1px 2px;", colspan: 2}
+      Total
+
+    %th{ style: "border: 1px solid #808080; background-color: #B6B6B6; padding: 1px 2px;" }
+      #{ total }

@@ -1,0 +1,47 @@
+.container
+  .row-fluid
+    %table.table.table-bordered.table-hover
+      %tr
+        %th
+          Id
+        %th
+          Source
+        %th
+          Category group
+        %th
+          Auth_token
+        %th
+          Ip
+        %th.span2
+          For date
+        %th.span2
+          Amount
+        %th
+          Data size
+        %th
+          Created at
+
+        - @stat.each do |row|
+          %tr
+            %td
+              = row.id
+            %td
+              = row.source
+            %td
+              = row.category_group
+            %td
+              = row.auth_token
+            %td
+              = row.ip
+            %td
+              = row.for_date
+            %td
+              = row.amount
+            %td
+              = row.data_size
+            %td
+              = row.created_at
+
+
+    .span12
+      = paginate @stat

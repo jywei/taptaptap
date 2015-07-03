@@ -1,0 +1,17 @@
+%table.table.table-striped
+  %tr
+    %th id
+    %th request_ip
+    %th count
+    %th date
+  - @rc.each do |rrc|
+    %tr
+      %td= rrc.id
+      %td= link_to "#{rrc.request_ip}", admin_filter_by_address_path(request_ip: rrc.request_ip)
+      %td= rrc.count
+      %td= link_to "#{rrc.created_at.to_date}", admin_filter_by_date_path(date: rrc.created_at.to_date)
+
+= paginate @rc
+
+/ :request_ip
+/ :count

@@ -1,0 +1,6 @@
+.form-group
+  #datepicker_day_hourly{class: "input-append date"}
+    = text_field_tag :date_day_hourly, "#{@default_day}",  class: "form-control", "data-format" => "yyyy-MM-dd", style: "width: 120px;" 
+    %span{ class: "add-on" }
+      %i{class: "icon-th"}
+  = button_tag :show, class: "btn btn-primary", id: "apply_day_hourly"    

@@ -1,0 +1,7 @@
+= "Source breakthrough for postings for #{@time - 1.day} to #{@time}"
+%br
+= "Source: "
+%br
+- @counts.each do |source, count|
+      = "#{source}: #{number_with_delimiter count, delimiter: ','} "
+      %br

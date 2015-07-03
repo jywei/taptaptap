@@ -1,0 +1,160 @@
+:javascript
+  $(document).ready(function() {
+    function filterByCategory() {
+      var categories = $('.category_filter:checked').map(function(idx, elt) { return $(elt).val() });
+
+      $('tbody tr').show();
+
+      if (categories.length < 1) {
+        return;
+      }
+
+      $('tbody td.categories').each(function(idx, elt) {
+        categories.each(function(idx, category) {
+          if (!$(elt).text().contains(category)) {
+            $(elt).parent('tr').hide();
+            return false;
+          }
+        });
+      });
+    }
+
+    $(".table").tablesorter({ theme: 'blue', sortReset: true });
+
+    $('.search').val('');
+
+    $('.search').on('keyup', function() {
+      var query = $(this).val(),
+          pattern = new RegExp('^' + query, 'i');
+
+      if (query.trim().length < 1) {
+        $('tr').has('.filter_field').show()
+        return;
+      }
+
+      $('.filter_field').each(function(idx, item) {
+        var field = $(item).text().trim(),
+            row = $(item).parents('tr');
+
+        if (!pattern.test(field)) {
+          row.hide();
+        } else {
+          row.show();
+        }
+      });
+    });
+
+    $('.category_filter').each(function(idx, elt) {
+      $(elt).prop('checked', true);
+    });
+
+    $('.category_filter_all').click(function() {
+      $('.category_filter').each(function(idx, elt) {
+        $(elt).prop('checked', true);
+      });
+
+      filterByCategory();
+    });
+
+    $('.category_filter_none').click(function() {
+      $('.category_filter').each(function(idx, elt) {
+        $(elt).prop('checked', false);
+      });
+
+      filterByCategory();
+    });
+
+    $('.category_filter').on('change', function() {
+      filterByCategory();
+    });
+  });
+
+:css
+  .table thead tr {
+    background-color: #bedebe;
+  }
+
+.container
+  %h3 Annotations
+
+  .row
+    .span12
+      = link_to "Add annotation", new_admin_annotation_path, class: "btn btn-middle btn-primary"
+      = link_to "Export to CSV", csv_admin_annotations_path, class: "btn btn-middle btn-primary"
+
+  .row
+    .span12
+      &nbsp;
+
+  - if not @annotations.present?
+    .alert.alert-info
+      No annotations found
+  - else
+    .row
+      .span12
+        %input.search{ :placeholder => "Filter by name" }
+
+    .row
+      .span12
+        &nbsp;
+
+    .row
+      .span12
+        .accordion#accordion1
+          .accordion-group
+            .accordion-heading
+              %a.accordion-toggle{ 'data-toggle' => "collapse", 'data-parent' => "#accordion1", 'href' => "#collapse1" }
+                Category filter
+
+            #collapse1.accordion-body.collapse
+              .accordion-inner
+                .row
+                  .span12
+                    %a.category_filter_all.btn.btn-middle.btn-primary
+                      All
+
+                    %a.category_filter_none.btn.btn-middle.btn-primary
+                      None
+
+                .row
+                  - PostingConstants::CATEGORIES.in_groups(4).each do |group|
+                    .span2
+                      - group.each do |category|
+                        - next if category.blank?
+
+                        %label.checkbox
+                          = category
+                          %input.category_filter{ :type => 'checkbox', :value => category }
+
+    .row
+      .span12
+        %table.table.table-bordered.list
+          %thead
+            %tr
+              %th Annotation
+              %th Sources
+              %th Category
+              %th Control type
+              %th Is public
+              %th Actions
+
+          %tbody
+            - @annotations.each do |annotation|
+              %tr
+                %td.filter_field
+                  = annotation.name
+
+                %td
+                  = annotation.sources.join ','
+
+                %td.categories
+                  = annotation.categories.join ','
+
+                %td
+                  = annotation.control_type
+
+                %td
+                  = annotation.public?
+
+                %td
+                  = link_to 'Edit', edit_admin_annotation_path(annotation), class: 'btn btn-small btn-primary'

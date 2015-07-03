@@ -1,0 +1,13 @@
+%table
+  %thead
+    %tr
+      %th Category
+      %th Annotaion
+  %tbody
+    - @annotations.each do |annotation|
+      %tr
+        %td
+          = annotation.category
+
+        %td
+          = annotation.name

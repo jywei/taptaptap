@@ -1,0 +1,58 @@
+:javascript
+  window.minDate = "#{ @min_date }";
+  window.maxDate = "#{ Date.today }"; 
+  
+  jQuery(function(){
+      
+
+    jQuery('#datepicker').datepicker({
+        format: "yyyy-mm-dd",
+        autoclose: true,
+        startDate: "#{ @min_date }",
+        endDate: "#{ Date.today }"
+    });
+  }); 
+:css
+  #antengo th {
+      font-size: 12px;
+      padding: 2px;
+      vertical-align:middle;
+      text-align: center;
+  } 
+  #antengo td{
+      text-align: center;
+  }
+  .red{
+      color: #f50f0f;
+  } 
+  .black{
+      color: black;  
+  }
+
+.container
+
+  %form.form-inline.well.well-large{ action: antengo_admin_statistics_path }
+    %label For date:
+    #datepicker.input-append.date
+      = text_field_tag :for_date, "#{@for_date}", class: "form-control", "data-format" => "yyyy-MM-dd", style: "width: 100px;"
+
+      %span.add-on
+        %i.icon-th
+    %button.btn.btn-primary{ type: 'submit' } Show
+
+  %table#antengo.table.table-bordered.table-hover
+    %thead
+      %tr
+        %th 
+        - @categories.each do |category|
+          %th
+            = category
+
+    %tbody
+      - @data.each do |metro, stats|
+        %tr
+          %th
+            = metro
+          - stats.each do |stat|
+            %td{ class: "#{stat[:count] == 0 ? 'red': 'black' }"}
+              =stat[:count]  

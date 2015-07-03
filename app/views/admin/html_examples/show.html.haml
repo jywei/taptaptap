@@ -1,0 +1,19 @@
+- present @html_example do |presenter|
+  %h1
+    = status_badge presenter.status
+    = presenter.name
+    = presenter.actions
+
+  %dl
+    %dt URL
+    %dd= link_to presenter.url, presenter.url
+    %dt Committer
+    %dd= presenter.committer
+    %dt Comment
+    %dd= presenter.comment
+    %dt Notification
+    %dd= check_box_tag :notification, presenter.notification
+    %dt HTML
+    %dd
+      = code do
+        = presenter.html

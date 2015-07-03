@@ -1,0 +1,20 @@
+%table{id: 'ruby_code'}
+  - Admin::CompliancesController::POSTING_FIELDS.each_with_index do |field, index|
+    %tr
+      %td= field
+      %td= text_field_tag "ruby_code[#{field}]", nil, id: "ruby_code_#{field}", class: 'ruby_code_field'
+      %td
+        = "use 'posting' hash to get current fields; use original posting keys (not 3taps keys)" if index == 0
+
+:coffee
+  $(document).ready ->
+    redraw_ruby_code()
+    $("select.select_field").change (x)->
+      field = $(x.currentTarget).find(":selected").text()
+      redraw_ruby_code()
+
+  redraw_ruby_code = ->
+    $(".ruby_code_field").show()
+    selected_options = $("select.select_field").find(':selected')
+    for field in selected_options
+      $("#ruby_code_" + $(field).val()).hide().val('')

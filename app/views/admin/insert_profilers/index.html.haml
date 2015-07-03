@@ -1,0 +1,35 @@
+:css
+  table.table td {
+    font-size: 10px;
+  }
+  table.table thead th{
+    text-align: center;
+    vertical-align: middle;
+  }
+  form.form select{
+    width: 120px;
+  }
+.row
+  %form.form.form-inline.well{action: admin_insert_profilers_path, method: 'get'}
+    = label_tag :source
+    = select_tag :source, options_for_select(@sources, @source)
+    = submit_tag :show, class: "btn btn-primary"
+
+  %table.table.table-bordered.table-hover
+    %thead
+      %tr
+        %th Source
+        %th Number of postings
+        %th Total time
+        %th Breakdown by action
+        %th Average time per posting
+        %th Breakdown by posting
+        %th Filter time
+        %th Insert time
+        %th{style: "width: 300px;"} Render time
+        %th Overhead time
+        %th{style: "width: 120px;"} Created at
+    %tbody
+      = render partial: 'insert_profiler', collection: @inserts
+.row
+  =paginate @inserts

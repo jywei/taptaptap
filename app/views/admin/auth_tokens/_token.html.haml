@@ -1,0 +1,11 @@
+%tbody
+  %tr
+    %td
+      %strong
+        = token.token
+    %td
+      = token.sources.join(", ")
+    %td{style: "width:160px;"}
+      = link_to 'add/remove source', admin_token_settings_path(token.id), class: "btn btn-primary"      
+    %td{style: "width:80px;"}
+      = link_to 'Destroy', [:admin, token], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-warning"  

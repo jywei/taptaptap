@@ -1,0 +1,10 @@
+%tr
+  %td
+    = hidden_field_tag "fields[fields#{compliance_key_counter}][key]", compliance_key
+    = compliance_key
+  %td
+    = @json[compliance_key]
+  %td
+    = select_tag "fields[fields#{compliance_key_counter}[field]]", options_for_select(Admin::CompliancesController::POSTING_FIELDS, @handled_fields.index(compliance_key)), include_blank: true, class: "select_field"
+  %td
+    = text_field_tag "fields[fields#{compliance_key_counter}[annotation_key]]", nil, id: "annotation_field_#{compliance_key_counter}", style: 'display:none;'

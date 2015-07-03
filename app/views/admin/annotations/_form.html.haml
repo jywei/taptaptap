@@ -1,0 +1,110 @@
+:scss
+  .margined, .margined > div
+  {
+    margin-bottom: 5px;
+  }
+
+:javascript
+  $(document).ready(function(){
+    $('body').on('click', '.remove_value', function(e) {
+      $(this).parent().remove();
+      e.preventDefault();
+    });
+
+    $('#add-option').click(function(e) {
+      var field_name = "annotation[options][]";
+      var html = "<div class='span6'><input type='text' name='annotation[options][][name]' /> <input type='checkbox' name='annotation[options][][public]' value='1' /> <span> public</span> <span class='btn btn-small btn-danger remove_value'>Remove</span></div><br />";
+
+      $("#options").append(html);
+      e.preventDefault();
+    });
+  });
+
+.row
+  .control-group
+    = f.label :name, :class => 'control-label'
+
+    .controls
+      = f.text_field :name
+
+.row
+  .control-group
+    = f.label :categories, :class => 'control-label'
+
+    .controls
+      = f.select :categories, PostingConstants::CATEGORIES, { include_blank: false }, { multiple: true }
+
+.row
+  .control-group
+    = f.label :control_type, :class => 'control-label'
+
+    .controls
+      = f.select :control_type, Annotation::CONTROL_TYPES
+
+.row
+  .control-group
+    = f.label :is_public, :class => 'control-label'
+
+    .controls
+      = f.check_box :is_public
+
+.row
+  .control-group
+    = f.label :sources, :class => 'control-label'
+
+    .controls
+      = f.select :sources, PostingConstants::SOURCES, { include_blank: false }, { multiple: true }
+
+.row
+  .control-group
+    = f.label :options, :class => 'control-label'
+
+    .controls
+      %span#add-option.margined.btn.btn-small.btn-primary
+        Add option
+
+      .row.margined#options
+        - if @annotation[:options].present?
+          - @annotation[:options].each do |option|
+            .span6
+              = text_field_tag "annotation[options][][name]", option['name']
+              = check_box_tag "annotation[options][][public]", "1", option['public']
+
+              %span
+                public
+
+              %span.btn.btn-small.btn-danger.remove_value
+                Remove
+
+.row
+  .control-group
+    = f.label :override_all_sources_value, :class => 'control-label'
+
+    .controls
+      = f.select :override_all_sources_value, Annotation::OVERRIDE_VALUES, { include_blank: "- autodetect -" }, { multiple: false }
+
+.row
+  .control-group
+    = f.label :override_all_category_groups_value, :class => 'control-label'
+
+    .controls
+      = f.select :override_all_category_groups_value, Annotation::OVERRIDE_VALUES, { include_blank: "- autodetect -" }, { multiple: false }
+
+.row
+  .control-group
+    = f.label :override_all_categories_value, :class => 'control-label'
+
+    .controls
+      = f.select :override_all_categories_value, Annotation::OVERRIDE_VALUES, { include_blank: "- autodetect -" }, { multiple: false }
+
+.row
+  .control-group
+    = f.label :override_all_categories_in_group_value, :class => 'control-label'
+
+    .controls
+      = f.select :override_all_categories_in_group_value, Annotation::OVERRIDE_VALUES, { include_blank: "- autodetect -" }, { multiple: false }
+
+.row
+  .span5.text-center
+    - submit_title = (action_name == 'edit') ? 'Update' : 'Create'
+    = f.submit submit_title, class: 'btn btn-large btn-primary'

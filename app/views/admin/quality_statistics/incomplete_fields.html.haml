@@ -1,0 +1,25 @@
+.container
+  %h3 Last postings with incomplete fields
+
+  %table.table.table-bordered.table-hover
+    %thead
+      %tr
+        %th Posting id
+        %th Quality
+        %th Missing fields
+
+    %tbody
+      - @postings.each do |posting|
+        - missing = missing_fields_of posting
+
+        %tr
+          %td
+            = posting[:id]
+
+          %td
+            = posting[:fields_quality]
+
+          %td
+            = missing.join(', ')
+
+  = paginate @postings

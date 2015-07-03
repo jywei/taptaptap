@@ -1,0 +1,11 @@
+//= require jquery
+//= require jquery_ujs
+//= require twitter/bootstrap
+//= require jquery.tablesorter
+//= require bootstrap-datepicker
+//= require bootstrap-slider
+//= require moment
+//= require sprintf.min
+//= require admin/sources
+//= require bootstrap-tabdrop
+//= require angular-1.3.15.min

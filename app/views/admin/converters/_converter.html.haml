@@ -1,0 +1,49 @@
+.container
+  .row
+    .span11
+      %h4
+        = converter.source
+
+    .span1
+      = link_to 'Edit', edit_admin_converter_path(converter), class: 'btn btn-small btn-primary pull-right'
+
+  .row
+    .span12
+      %table.table.table-bordered
+        %tbody
+          - %w(status state flagged_status category category_group).each do |title|
+            %tr
+              %th{ :rowspan => 4 }
+                = title.humanize
+
+            %td
+              - use_acceptor = converter.send("use_accept_#{ title }")
+
+              = raw write_boolean_attr use_acceptor, "use #{ title } acceptor".humanize
+
+              %br
+
+              - if use_acceptor
+                = raw write_array_attr converter.send("accept_#{ title }"), title.humanize
+
+            %tr
+              %td
+                - use_rejector = converter.send("use_reject_#{ title }")
+
+                = raw write_boolean_attr use_rejector, "use #{ title } rejector".humanize
+
+                %br
+
+                - if use_rejector
+                  = raw write_array_attr converter.send("reject_#{ title }"), title
+
+            %tr
+              %td
+                - if converter.respond_to? "convert_#{ title }".to_sym
+                  = raw write_boolean_attr converter.send("convert_#{ title }"), "use #{ title } converter".humanize
+
+          %tr
+            %th Other
+
+            %td
+              = raw write_boolean_attr converter.use_geolocation_module, "Use geolocation module"

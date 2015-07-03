@@ -1,0 +1,14 @@
+.row
+  .span12
+    %b Filter calculates
+
+.row
+  = form_tag admin_calculate_annotations_path, method: :get do
+    .span4
+      = select_tag :source, options_for_select(@sources, @source), include_blank: true
+
+    .span4
+      = select_tag :category, options_for_select(@categories, @category), include_blank: true
+
+    .span4
+      = submit_tag 'Load', class: 'btn btn-primary'

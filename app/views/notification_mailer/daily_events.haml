@@ -1,0 +1,5 @@
+= "Events from #{@time - 1.day} to #{@time}"
+%br
+- @events.each do |event|
+      = raw "#{event.event}: #{event.description}"
+      %br

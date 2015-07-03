@@ -1,0 +1,22 @@
+.display textarea {
+  width: 100%;
+  background-color: #F9F4D6;
+  font-family: monospace;
+  font-size: 10pt;
+}
+
+.display .results.error {
+  background-color: #f97c2b;
+}
+
+.hidden {
+  visibility: hidden !important;
+}
+
+.category_group {
+  font-weight: bold;
+}
+
+.category {
+  padding-left: 15px;
+}

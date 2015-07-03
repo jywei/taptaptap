@@ -1,0 +1,9 @@
+.form-group
+  #datepicker_hourly{class: "input-append date"}
+    = text_field_tag :date_hourly, "#{ @default_hour_day }",  class: "form-control", "data-format" => "yyyy-MM-dd", style: "width: 120px;" 
+    %span{ class: "add-on" }
+      %i{class: "icon-th"}
+  %div
+    Hour:    
+    = select_tag :hour, options_for_select( (0..23).to_a.map{|h| h.to_s.rjust(2, '0')} , @default_hour.to_s.rjust(2, '0')) , style: "width: 60px;"
+  = button_tag :show, class: "btn btn-primary", id: "apply_hourly"    

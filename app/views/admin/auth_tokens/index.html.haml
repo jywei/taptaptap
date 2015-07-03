@@ -1,0 +1,24 @@
+
+.container
+
+  %h3 Auth tokens
+
+  .row
+    .span8
+      = link_to "Add token", new_admin_auth_token_path, class: "btn btn-middle btn-primary"
+    .span4
+      = link_to "Scraper info", admin_scraper_infos_path, class: "btn btn-middle btn-primary"  
+  %br
+  %br    
+  .row
+    .span12
+      %table.table.table-hover
+        %thead
+          %tr
+            %th
+              Token
+            %th
+              Sources
+            %th{colspan: 2}
+                
+        = render partial: 'token', collection: @tokens    

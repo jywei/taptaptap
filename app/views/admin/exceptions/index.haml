@@ -1,0 +1,18 @@
+:scss
+  table#exceptions{
+    th:nth-child(1) {
+      width: 350px;
+    }
+    td {
+        padding-right: 30px;
+    }
+  }
+
+- if @job_status.present?
+  .alert.alert-block
+    = @job_status
+
+- if @exceptions.size > 0
+  = render 'table'
+- else
+  %h3 No exceptions! Yay!

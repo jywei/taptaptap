@@ -1,0 +1,22 @@
+!!!
+%html
+  %head
+    %title 3taps
+
+    = stylesheet_link_tag    "admin_application", media: "all"
+
+    = javascript_include_tag "admin_application"
+
+    = csrf_meta_tags
+  %body
+    .navbar
+      .navbar-inner
+        %a.brand{ href: admin_payment_home_path } 3taps
+        %ul.nav.pull-right
+          %li.pull-right
+            %a{ href: '#' }Login
+
+    .container
+      = bootstrap_flash
+      = render_breadcrumbs
+      = yield

@@ -1,0 +1,54 @@
+:css
+  body {
+    margin-bottom: 60px;
+  }
+
+  .code {
+    border-left: 3px solid #dedede;
+    border-bottom: 2px solid #deb5b5;
+    padding: 5px 20px 10px 12px;
+  }
+
+  li:hover {
+    padding: 15px 0 15px 15px;
+    background-color: #3ba5e3;
+    border-radius: 8px;
+  }
+
+%h1
+  System issued slowing down process
+
+%h2
+  Message received:
+
+.code
+  = @e.message
+
+- if @index_columns.present?
+  %h2
+    You may need to add this index on '#{@current_volume}' table:
+
+  .code
+    = @index_columns.join ','
+
+%h2
+  Request parameters:
+
+.code
+  = @params.inspect
+
+%h2
+  Message trace:
+
+%ul
+  - @e.backtrace.each do |trace|
+    %li
+      = trace
+
+%h2
+  MySQL clients:
+
+%ol
+  - @mysql_result.each do |row|
+    %li
+      = row.to_s

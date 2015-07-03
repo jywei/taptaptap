@@ -1,0 +1,13 @@
+!!!
+%html
+  %head
+    %title ThreetapsPostingApi
+    = stylesheet_link_tag    "application", media: "all"
+    = javascript_include_tag "application"
+    = stylesheet_link_tag 'request_builder'
+    = javascript_include_tag 'request_builder'
+    = csrf_meta_tags
+  %body
+    .container
+      = bootstrap_flash
+      = yield

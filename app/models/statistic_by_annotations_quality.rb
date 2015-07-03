@@ -1,0 +1,2 @@
+class StatisticByAnnotationsQuality < StatisticBase
+end

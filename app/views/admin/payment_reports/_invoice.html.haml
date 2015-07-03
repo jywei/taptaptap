@@ -1,0 +1,72 @@
+:scss
+  table.table {
+    td,th {
+      font-size:10px;
+    }
+  }
+.container
+  %table.table.table-bordered.table-hover.text-center
+    %thead
+      - total_count_by_column = Hash[@cat_group_names.keys.map{|e| [e, 0]}]
+      - total_bytes_by_column = Hash[@cat_group_names.keys.map{|e| [e, 0]}]
+      %tr
+        %th
+          Date
+        - @cat_group_names.each do |code, name|
+          %th
+            = name
+        %th
+          Total
+    %tbody
+      - @stat.each do |row|
+      - total_count_by_row = 0
+      - total_bytes_by_row = 0
+        %tr
+          %td
+            = row['date']
+          - @cat_group_names.keys.each do |code|
+            %td
+              - if row.has_key?(code)
+                - total_count_by_row += row[code][:amount]
+                - total_count_by_column[code] += row[code][:amount]
+
+                - total_bytes_by_row += row[code][:bytes]
+                - total_bytes_by_column[code] += row[code][:bytes]
+
+                = "#{number_with_delimiter(row[code][:amount])} postings (#{number_to_human_size(row[code][:bytes])})"
+              - else
+                = 0
+          %th
+            = "#{ number_with_delimiter(total_count_by_row)} postings (#{number_to_human_size(total_bytes_by_row)})"
+    %tfoot
+      %tr
+        %th
+          Total count
+        - @cat_group_names.keys.each do |code|
+          %th
+            = "#{number_with_delimiter(total_count_by_column[code])} postings (#{number_to_human_size(total_bytes_by_column[code])})"
+        %th
+          = "#{number_with_delimiter(total_count_by_column.values.sum)} postings (#{number_to_human_size(total_bytes_by_column.values.sum)})"
+      %tr
+        %th
+          Rate
+        - sum_by_column = {}
+        - if @rate.all_groups
+          - @cat_group_names.keys.each{|code| sum_by_column[code] = total_count_by_column[code] * @rate.rate}
+          %td{ :colspan => @cat_group_names.keys.size + 1 }
+            = number_to_currency(@rate.rate, precision: 6)
+        - else
+          - @cat_group_names.keys.each do |code|
+            - rate = @rate.payment_group_rates.select{|group_rate| group_rate.category_group == code }.first.rate.to_f
+            - sum_by_column[code] = (total_count_by_column[code] * rate ).round(6)
+            %td
+              = number_to_currency(rate, precision: 6)
+          %td
+      %tr
+        %th
+          Total sum
+        - @cat_group_names.keys.each do |code|
+          %th
+            = number_to_currency(sum_by_column[code], precision: 2)
+        %th{style: "background-color: #F5F5F5" }
+          = number_to_currency(sum_by_column.values.sum, precision: 2)

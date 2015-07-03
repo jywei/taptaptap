@@ -1,0 +1,60 @@
+:javascript
+  $(function() {
+    $('#hours-slider').slider({
+      value: #{params[:hours] || 1},
+      min: 1,
+      max: 7 * 24
+    }).on('slide', function(evt) {
+      updateColors();
+    });
+
+    updateColors();
+    updateCurrentTime();
+
+    setInterval(updateCurrentTime, 1000);
+  });
+:css
+  h3 {  line-height: 25px;}    
+
+.row
+  .span12.text-center
+    %strong Current time:
+    %span#current_time
+
+.row
+  .span12
+    &nbsp;
+
+.row
+  .span6.text-right
+    Hours ago:
+
+  .span6
+    #hours-slider
+
+.row
+  .span12
+    &nbsp;
+
+- @sources.in_groups_of(4) do |group|
+  .row
+    - group.each do |source|
+      - next if source.nil?
+
+      - present source, SourcePresenter do |p|
+        .span3.text-center.color-plate{ 'data-timestamp' => p.timestamp }
+          %h3
+            = link_to p.name, zips_by_source_admin_sources_path(p.name), style: "color: #5e5e5e"
+          - if @track_carmakers.include?(p.name)  
+            = link_to :carmakers, carmakers_by_source_admin_sources_path(p.name), style: "color: #5e5e5e"
+          - else
+            %br   
+          %p.relative-time
+            #{ time_ago_in_words(p.timestamp) } ago
+
+          %p
+            = p.timestamp.strftime('%D %T UTC')
+
+  .row
+    .span12
+      &nbsp;

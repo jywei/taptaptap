@@ -1,0 +1,23 @@
+.control-group
+  = f.label :use_accept_category, :class => 'control-label'
+
+  .controls
+    = f.check_box :use_accept_category
+
+.control-group
+  = f.label :accept_category, :class => 'control-label'
+
+  .controls
+    = f.select(:accept_category, @categories, { include_hidden: false }, { multiple: true, size: 5 })
+
+.control-group
+  = f.label :use_reject_category, :class => 'control-label'
+
+  .controls
+    = f.check_box :use_reject_category
+
+.control-group
+  = f.label :reject_category, :class => 'control-label'
+
+  .controls
+    = f.select(:reject_category, @categories, { include_hidden: false }, { multiple: true, size: 5 })

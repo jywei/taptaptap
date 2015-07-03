@@ -1,0 +1,17 @@
+%h1
+  = "Polling timeouts from #{@time - 1.day} to #{@time}"
+
+%br
+
+%h3 Unicorn stats:
+= @timeout.unicorn_stats
+
+%br
+
+%h3 DB stats:
+= @timeout.db_stats
+
+%br
+
+%h3 Message:
+= @timeout.message

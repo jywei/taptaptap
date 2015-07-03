@@ -1,0 +1,12 @@
+:css
+  .table thead tr {
+    background-color: #bedebe;
+  }
+
+.container
+  %h3 Annotation calculations
+
+  = render partial: 'filters'
+
+  - if @calculates.present?
+    = render partial: 'calculations'

@@ -1,0 +1,22 @@
+%h2
+  Postings on #{ Date.yesterday }:
+
+%br
+
+%table{style: "border: 1px solid gray; border-collapse: collapse", cellspacing: 0, cellpadding: "2px;"}
+  %thead
+    %tr
+      %th{style: "font-size: 10px;"}
+        metro\cats 
+      - @categories.each do |category|
+        %th{style: "border: 1px solid gray"}
+          =category
+
+  %tbody
+    - @data.each do |metro, stats|
+      %tr
+        %th{style: "border: 1px solid gray"}
+          = metro
+        - stats.each do |stat|
+          %td{ style: "#{stat[:count] == 0 ? 'color: red': 'color: black' }; text-align:center; border: 1px solid gray" }
+            =stat[:count]

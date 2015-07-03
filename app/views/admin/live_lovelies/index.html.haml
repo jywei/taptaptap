@@ -1,0 +1,51 @@
+:javascript
+  $(function(){
+    $('.input-daterange').datepicker({
+        format: "yyyy-mm-dd",
+        startDate: "#{Date.today - 1.month}",
+        endDate: "#{Date.today}",
+        autoclose: true
+    });
+  });
+:css
+  .table td, .table th {
+    text-align: center;
+  }
+%form.form-inline.well{ action: admin_live_lovelies_path, method: 'get' }
+  %label Period:
+
+  %span.input-daterange
+    %input.input-small{ :type => "text", :name => 'start_date', :value => @start_date }
+    %span.add-on to
+    %input.input-small{ :type => "text", :name => 'end_date', :value => @end_date }
+
+  %button.btn.btn-primary{ type: 'submit' } Show
+.container
+  .span10
+    %table.table.table-bordered.table-hover
+      %thead
+        %tr
+          %th Date
+          %th price
+          %th source_account
+          %th formatted_address
+          %th bedrooms
+          %th Together
+      %tbody
+        - if @data.present?
+          - @data.each do |row|
+            %tr
+              %td
+                %strong
+                  =row[:date]
+              %td
+                = row[:data]['price']
+              %td
+                = row[:data]['source_account']
+              %td
+                = row[:data]['formatted_address']
+              %td
+                = row[:data]['bedrooms']
+              %td
+                %strong
+                  = row[:data]['together']

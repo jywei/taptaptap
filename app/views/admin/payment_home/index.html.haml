@@ -1,0 +1,48 @@
+:css
+  tbody td.head {
+    font-weight: bold;
+    background-color: #eeeeee;
+  }
+
+  tbody td {
+    text-align: center
+  }
+
+.container
+  .row
+    %ul.thumbnails
+      %li.span6.text-center
+        .thumbnail
+          %h3 Last month
+
+          %table.table.table-bordered
+            %tbody
+              %tr
+                %td.head Contracts
+                %td= @last_month[:contracts]
+
+              %tr
+                %td.head 3taps rewards
+                %td= @last_month[:income]
+
+              %tr
+                %td.head Customers' rewards
+                %td= @last_month[:income] * 0.7
+
+      %li.span6.text-center
+        .thumbnail
+          %h3 This month
+
+          %table.table.table-bordered
+            %tbody
+              %tr
+                %td.head Contracts
+                %td= @this_month[:contracts]
+
+              %tr
+                %td.head 3taps rewards
+                %td= @this_month[:income]
+
+              %tr
+                %td.head Customers' rewards
+                %td= @this_month[:income] * 0.7

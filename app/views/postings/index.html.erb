@@ -1,0 +1,61 @@
+<h1>Listing postings</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Source</th>
+      <th>Category</th>
+      <th>Location</th>
+      <th>External</th>
+      <th>External url</th>
+      <th>Heading</th>
+      <th>Body</th>
+      <th>Html</th>
+      <th>Expires</th>
+      <th>Language</th>
+      <th>Price</th>
+      <th>Currency</th>
+      <th>Images</th>
+      <th>Annotation</th>
+      <th>Status</th>
+      <th>Flagged</th>
+      <th>Deleted</th>
+      <th>Immortal</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @postings.each do |posting| %>
+      <tr>
+        <td><%= posting.source %></td>
+        <td><%= posting.category %></td>
+        <td><%= posting.location %></td>
+        <td><%= posting.external_id %></td>
+        <td><%= posting.external_url %></td>
+        <td><%= posting.heading %></td>
+        <td><%= posting.body %></td>
+        <td><%= posting.html %></td>
+        <td><%= posting.expires %></td>
+        <td><%= posting.language %></td>
+        <td><%= posting.price %></td>
+        <td><%= posting.currency %></td>
+        <td><%= posting.images %></td>
+        <td><%= posting.annotation %></td>
+        <td><%= posting.status %></td>
+        <td><%= posting.flagged %></td>
+        <td><%= posting.deleted %></td>
+        <td><%= posting.immortal %></td>
+        <td><%= link_to 'Show', posting %></td>
+        <td><%= link_to 'Edit', edit_posting_path(posting) %></td>
+        <td><%= link_to 'Destroy', posting, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Posting', new_posting_path %>

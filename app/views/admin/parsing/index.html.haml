@@ -1,0 +1,43 @@
+.choose-source-container{style: 'width:100%;'}
+  %p{style: 'margin-left: 3px; font-weight: bold;'} Select source:
+  = form_tag admin_parsing_path, method: :get do
+    = select_tag :source, options_for_select([Posting::SOURCES_FOR_PARSING, Posting::SOURCES_FOR_PARSING].transpose, @source)
+    = submit_tag 'Choose'
+.download-link{style: 'margin-top: 10px;'}
+  = link_to 'download current configuration', admin_parsing_show_path(@source), target: '_blank'
+  = link_to 'download mockup configuration', admin_parsing_mockup_path, target: '_blank'
+.upload_parsing_configuration_container{style: 'width:100%; margin-top: 30px;'}
+  %p{style: 'margin-left: 3px; font-weight: bold;'} Upload parsing configuration:
+  = form_tag admin_parsing_path, :multipart => true do
+    = file_field_tag :parsing_configuration, accept: '.csv'
+    = hidden_field_tag :source, @source
+    = submit_tag 'Upload'
+%br
+= link_to 'Create New Posting Example', new_posting_example_path
+%br
+%p{style: 'margin-left: 3px; font-weight: bold;float:left;'}= "#{@source} posting example:"
+%button.refresh{style: 'margin-top: 15px;margin-left: 25px;'} refresh
+.refresh-loading{style: 'color: blue;display:none;margin-top: 20px;margin-left: 200px;'} loading...
+.posting-examples
+  - @postings.each do |posting_example|
+    - if posting_example.posting.is_a? Hash
+      .posting-container{style: 'display: none;'}
+        - posting_example.posting.each do |key, value|
+          %p
+            %span{style: 'width: 200px;float: left;'}= key
+            %span= ':              ' + value.to_s
+.posting-example{style: 'margin-top: 30px;'}
+
+:coffee
+  current_posting = 0
+  refresh_posting = ->
+    posting = $('.posting-container')[current_posting]
+    $('.posting-example').html($(posting).html())
+    current_posting += 1
+    if current_posting >= $('.posting-container').size()
+      current_posting = 0
+
+  $(document).ready ->
+    refresh_posting()
+    $('button.refresh').click ->
+      refresh_posting()

@@ -1,0 +1,2 @@
+module Admin::BackpageSourcePostingsHelper
+end

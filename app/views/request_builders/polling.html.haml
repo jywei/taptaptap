@@ -1,0 +1,109 @@
+:javascript
+  window.test_url = 'http://polling.3taps.com/poll';
+
+.container
+  .row
+    .span12.text-center
+      %h2 Polling query builder
+
+  %form.form-horizontal
+    .row.text-center
+      .span3
+        .control-group
+          %input{ :type => "hidden", :name => "auth_token", :placeholder => "Your API key *", :title => "Your API key", :value => @api_key }
+          %label
+            %strong
+              Anchor
+            %br
+            (change anchor if you know what you do!)
+          %input{ :type => "text", :name => "anchor", :placeholder => "Anchor *", :title => "Anchor", :style => "color: #aaa;" }
+
+        / TODO: use symbolic names for sources from http://reference.3taps.com/sources
+        .control-group
+          %label
+            %strong
+              Source
+            %br
+              (You can select more than 1 source)
+          %select.alternate{ :name => "source", :title => "Sources", :multiple => true }
+
+            - {"APTSD"=>"Apartments.com", "AUTOC"=>"autotraderclassic.com", "AUTOD"=>"autotrader.com", "BKPGE"=>"Backpage", "CARSD"=>"Cars.com", "CCARS"=>"classiccars.com", "CRAIG"=>"Craigslist", "E_BAY"=>"ebay.com", "EBAYM"=>"Ebay Motors", "HMNGS"=>"Hemmings Motor News", "INDEE"=>"Indeed", "RENTD"=>"Rent.com"}.each do |source, title|
+              %option{ :value => source }
+                = title
+
+        .control-group
+          %label
+            %strong
+              Category
+            %br
+              (You can select more than 1 category)
+          %select.alternate{ :name => "category", :title => "Categories", :multiple => true, style: 'height: 200px;' }
+            -  @groups.each do |code, group|
+              %option{ :value => code, :class => 'category_group' }
+                = group['name']
+              - group['categories'].each do |category|
+                %option{ :value => category['code'], :class => 'category' }
+                  = category['name']
+
+        - # status, state, rpp
+
+        .control-group
+          %label
+            %strong
+              Updates
+          %select{ :name => "new_only", :title => "Updates only" }
+            %option{ :value => "1" }
+              Yes
+
+            %option{ :value => "0" }
+              No
+
+        .control-group
+          %label
+            %strong
+              Retvals
+            %br
+            (You can select more than 1 retval)
+          %select{ :name => "retvals", :title => "Response fields", :multiple => true }
+            - Posting.column_names.each do |field|
+              %option{ :value => field }
+                = field
+      .span3
+        .control-group{ 'data-location-order' => 0, 'data-location-level' => 'country' }
+          %h4
+            Location parts
+            %i
+              (step-by-step)
+          %label
+            %strong
+              Country
+          %select{ :type => 'text', :placeholder => 'Country', :class => 'no_filter',:name => 'location.country', :title => 'Country', 'data-location-order' => 0, 'data-location-level' => 'country' }
+            %option{ :value => "" }
+              select country
+            %option{:value => 'USA'}
+              = "United States"
+            %option{:value => 'CAN'}
+              = "Canada"
+
+        - %w(location.state location.metro location.region location.county location.city location.locality location.zipcode).each_with_index do |field, order|
+          - level = field.gsub(/location\./, '')
+          - title = level.humanize
+          .control-group{ 'data-location-order' => order +1, 'data-location-level' => level }
+            %label
+              %strong
+                = title
+            %select{ :type => "text", :placeholder => title, :title => title, :name => field, 'data-location-order' => order +1, 'data-location-level' => level }
+              %option{ :value => "" }
+                = "select #{ level }"
+
+      .span6.display
+        .control-group
+          %textarea.exclude{ :name => "query", :readonly => true, :rows => 10 }
+
+        .control-group
+          %button.btn.send
+            Test!
+
+        .control-group
+          %textarea.exclude.results{ :readonly => true, :rows => 10 }
+            Results

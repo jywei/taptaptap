@@ -1,0 +1,16 @@
+- flash.each do |name, msg|
+  .message{style: ''}= msg 
+.new-posting-example
+  %p New Posting Example(JSON):
+  = form_for @posting_example do |f|
+    .group
+      = f.label :source
+      = f.text_field :source
+    .group
+      = f.label :url
+      = f.text_field :url
+    .group
+      = f.label :posting
+      = f.text_area :posting
+    = f.submit 'Send'
+   

@@ -1,0 +1,74 @@
+en:
+  breadcrumbs:
+    admin:
+      home:
+        home: Home
+      application:
+        home: Home
+      auth_tokens:
+        home: Home
+        auth_tokens: Auth tokens
+      converters:
+        home: Home
+        converters: Converters
+      accounts:
+        home: Accounts
+      annotations:
+        home: Home
+      calculate_annotations:
+        home: Home
+      payment_reports:
+        home: Home
+      payment_rates:
+        home: Home
+      statistics:
+        home: Home
+        statistics: Statistics
+      statistics:
+        home: Home
+        statistics: Statistics
+        antengo: Antengo
+      html_examples:
+        home: Home
+        html_examples: HTML Examples
+      scraper_infos:
+        home: Home
+        scraper_infos: Scraper Info
+      sources:
+        home: Home
+        sources: Sources
+      partitions:
+        home: Home
+        partitions_manager: Partitions Manager
+      parsing:
+        home: Home
+        parsing_manager: Parsing Manager
+      compliances:
+        home: Home
+        compliances_manager: Compliances Manager
+      proxy_ips:
+        home: Home
+        proxy_ips: Proxy ip address
+      exceptions:
+        home: Home
+        exceptions_manager: Exceptions Manager
+      notifications:
+        home: Home
+      empty_timestamps:
+        home: Home
+        empty_timestamps: Empty Timestamps
+      live_lovelies:
+        home: Home
+        live_lovelies: LiveLovely Statistics
+      source_accounts:
+        home: Home
+        source_accounts: Count source_account
+      quality_statistics:
+        home: Home
+        quality_statistics: Quality Statistics
+      latency_statistics:
+        home: Home
+        latencies: Latency Statistics
+      insert_profilers:
+        home: Home
+        insert_profilers: Insert Profilers

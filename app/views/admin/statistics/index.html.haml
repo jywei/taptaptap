@@ -1,0 +1,150 @@
+:javascript
+  window.stats_config = {
+    series_shift_length: #{ StatisticLive::SERIES_LENGTH },
+    live: {
+      series: #{ StatisticLive.get_sorted_data.to_json },
+      updateUrl: '#{ live_data_admin_statistics_path }'
+    },
+    heartbeats: {
+      day: {
+        series: #{ StatisticLive.get_total_data_by(:day).to_json },
+        updateUrl: '#{ total_data_admin_statistics_path(criteria: :day) }',
+        timeout: 60 * 1000,
+        dateFormat: 'dd mmmm',
+        running: true
+      },
+      hour: {
+        series: #{ StatisticLive.get_total_data_by(:hour).to_json },
+        updateUrl: '#{ total_data_admin_statistics_path(criteria: :hour) }',
+        timeout: 60 * 1000,
+        dateFormat: 'HH:MM',
+        running: true
+      },
+      minute: {
+        series: #{ StatisticLive.get_total_data_by(:minute).to_json },
+        updateUrl: '#{ total_data_admin_statistics_path(criteria: :minute) }',
+        timeout: 60 * 1000,
+        dateFormat: 'HH:MM',
+        running: true
+      },
+      second: {
+        series: #{ StatisticLive.get_total_data_by(:second).to_json },
+        updateUrl: '#{ total_data_admin_statistics_path(criteria: :second) }',
+        timeout: 1000,
+        dateFormat: 'HH:MM:ss'
+      }
+    },
+    min_date: "#{ @min_date }",
+    max_date: "#{ @max_date }",
+    live_stats_running: false
+  };
+
+
+  
+
+%form.form-inline.well{ action: admin_statistics_path, style: "padding:7px" }
+    
+  %label Period:
+
+  %span.input-daterange
+    %input.input-small{ :type => "text", :name => 'start_date', :value => @start_date }
+    %span.add-on to
+    %input.input-small{ :type => "text", :name => 'end_date', :value => @end_date }
+
+  %button.btn.btn-primary{ type: 'submit' } Show
+
+%ul.nav.nav-tabs
+  %li
+    %a{ "href" => "#by_hour", "data-target" => "#by_hour", "data-toggle" => "tab" }
+      By UTC hour
+      %span.label.label-warning
+        CRAIG
+
+  %li{ "class" => (@category_group.present? ? '' : 'active') }
+    %a{ "href" => "#by_category_group", "data-target" => "#by_category_group", "data-toggle" => "tab" }
+      By category group
+      %span.label.label-warning
+        CRAIG
+
+  %li{ "class" => (@category_group.present? ? 'active' : '') }
+    %a{ "href" => "#by_category", "data-target" => "#by_category", "data-toggle" => "tab" }
+      By category
+      %span.label.label-warning
+        CRAIG
+
+  %li
+    %a{ "href" => "#by_weekly_hour", "data-target" => "#by_weekly_hour", "data-toggle" => "tab" }
+      Weekly
+      %span.label.label-warning
+        CRAIG
+
+  %li
+    %a{ "href" => "#ip_by_dates", "data-target" => "#ip_by_dates", "data-toggle" => "tab" }
+      IP by dates
+
+  %li
+    %a{ "href" => "#dates_by_ip", "data-target" => "#dates_by_ip", "data-toggle" => "tab" }
+      Dates by IP
+
+  %li
+    %a{ "href" => "#live", "data-target" => "#live", "data-toggle" => "tab" }
+      Live (by sources)
+
+  %li
+    %a{ "href" => "#heartbeats", "data-target" => "#heartbeats", "data-toggle" => "tab" }
+      Heartbeats
+
+.tab-content
+  - @group_size = 3
+  - @dates = (@start_date .. @end_date).to_a.reverse.to_enum
+
+  #by_hour.tab-pane
+    = render partial: 'chart_set', locals: { series: @series[:by_utc_hour], added: {long_term_data: 1} }
+    
+  #by_category_group{ class: "tab-pane #{ @category_group.present? ? '' : 'active' }" }
+    = render partial: 'chart_set', locals: { series: @series[:by_category_group], added: {} }
+
+  #by_category{ class: "tab-pane #{ @category_group.present? ? 'active' : '' }" }
+    = render partial: 'chart_set', locals: { series: @series[:by_category], added: {} }
+
+  #by_weekly_hour.tab-pane
+    %div.span11
+      = line_chart @series[:by_weekly_hour], @chart_options
+
+  #ip_by_dates.tab-pane
+    = render partial: 'chart_set', locals: { series: @series[:ip_by_dates], added: {} }
+
+  #dates_by_ip.tab-pane
+    = render partial: 'chart_set', locals: { series: @series[:dates_by_ip], added: {} }
+
+  #live.tab-pane
+    .row-fluid
+      .span12.text-center
+        #run-live-stats.btn.btn-warning
+          %i.icon-play
+          Run/Pause
+
+    .row-fluid
+      .span12
+        #live-chart-container
+
+  #heartbeats.tab-pane
+    .row-fluid
+      .span12.text-center
+        #run-heartbeats-stats.btn.btn-warning
+          %i.icon-play
+          Run/Pause
+
+    .row-fluid
+      .span12
+        #heartbeats-by-second-chart-container
+
+    .row-fluid
+      .span4
+        #heartbeats-by-minute-chart-container
+
+      .span4
+        #heartbeats-by-hour-chart-container
+
+      .span4
+        #heartbeats-by-day-chart-container

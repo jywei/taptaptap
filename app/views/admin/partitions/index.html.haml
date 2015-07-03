@@ -1,0 +1,10 @@
+.partitions_management_container{style: 'width:100%; text-align: center;margin-top: 200px;'}
+  %h1 Use partitions only after:
+  = form_tag admin_partitions_path do
+    = text_field_tag :partitions_start_date, @partitions_start_date
+    = submit_tag 'Send'
+
+:javascript
+  $(document).ready(function(){
+    $('#partitions_start_date').datepicker({ dateFormat: "yy-mm-dd" })
+  });  

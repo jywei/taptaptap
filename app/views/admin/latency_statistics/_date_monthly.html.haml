@@ -1,0 +1,6 @@
+.form-group
+  #datepicker_monthly{class: "input-append date"}
+    = text_field_tag :date_monthly, "#{@default_month}",  class: "form-control",  style: "width: 120px;" 
+    %span{ class: "add-on" }
+      %i{class: "icon-th"}
+  = button_tag :show, class: "btn btn-primary", id: "apply_monthly"    

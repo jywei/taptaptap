@@ -1,0 +1,29 @@
+.row
+  = form_tag admin_calculate_annotations_path, method: :put do
+    .span12
+      = hidden_field_tag :source, @source
+      = hidden_field_tag :category, @category
+      = submit_tag 'Save changes', class: 'btn btn-primary'
+
+    .span12
+      &nbsp;
+
+    .span12
+      %table.table.table-bordered.list
+        %thead
+          %tr
+            %th Annotation
+            %th Value sample
+            %th Weight
+
+        %tbody
+          - @calculates.each do |calc|
+            %tr
+              %td
+                = calc.annotation
+
+              %td
+                = calc.sample_value
+
+              %td
+                = text_field_tag "calculates[#{ calc.id }][weight]", calc.weight
