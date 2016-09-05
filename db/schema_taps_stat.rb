@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150122220336) do
+ActiveRecord::Schema.define(version: 20150619145548) do
 
   create_table "annotations_locations", force: true do |t|
     t.string   "source",            limit: 5
@@ -98,6 +98,17 @@ ActiveRecord::Schema.define(version: 20150122220336) do
     t.string   "ip_address", limit: 15
     t.integer  "count"
   end
+
+  create_table "statistic_by_empty_images", force: true do |t|
+    t.string   "source",     limit: 5
+    t.string   "category",   limit: 4
+    t.date     "for_date"
+    t.integer  "amount"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "statistic_by_empty_images", ["source", "category", "for_date"], name: "index_on_source_category_date", unique: true, using: :btree
 
   create_table "statistic_by_fields_qualities", force: true do |t|
     t.string   "source",             limit: 5

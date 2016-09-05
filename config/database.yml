@@ -3,7 +3,9 @@ development:
   encoding: utf8
   database: taps_dev
   username: root
-  password: abcABC123
+  password: 12345678
+  host: taps.cithujepeaxe.ap-northeast-1.rds.amazonaws.com
+  port: 3306
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -13,21 +15,27 @@ test:
   encoding: utf8
   database: taps_test
   username: root
-  password:
+  password: 12345678
+  host: taps.cithujepeaxe.ap-northeast-1.rds.amazonaws.com
+  port: 3306
 
 production:
   adapter: mysql2
   encoding: utf8
   database: taps_production
-  username: posting
-  password: taptaptap
+  username: root
+  password: 12345678
+  host: taps.cithujepeaxe.ap-northeast-1.rds.amazonaws.com
+  port: 3306
 
 staging:
   adapter: mysql2
   encoding: utf8
   database: taps_staging
-  username: staging
-  password: taptaptap
+  username: root
+  password: 12345678
+  host: taps.cithujepeaxe.ap-northeast-1.rds.amazonaws.com
+  port: 3306
 
 #development for multi-migrate
 
@@ -36,28 +44,36 @@ taps_development:
   encoding: utf8
   database: taps_dev
   username: root
-  password: abcABC123
+  password: 12345678
+  host: taps.cithujepeaxe.ap-northeast-1.rds.amazonaws.com
+  port: 3306
 
 taps_test:
   adapter: mysql2
   encoding: utf8
   database: taps_test
   username: root
-  password:
+  password: 12345678
+  host: taps.cithujepeaxe.ap-northeast-1.rds.amazonaws.com
+  port: 3306
 
 taps_production:
   adapter: mysql2
   encoding: utf8
   database: taps_production
-  username: posting
-  password: taptaptap
+  username: root
+  password: 12345678
+  host: taps.cithujepeaxe.ap-northeast-1.rds.amazonaws.com
+  port: 3306
 
 taps_staging:
   adapter: mysql2
   encoding: utf8
   database: taps_staging
-  username: staging
-  password: taptaptap
+  username: root
+  password: 12345678
+  host: taps.cithujepeaxe.ap-northeast-1.rds.amazonaws.com
+  port: 3306
 
 #stat
 
@@ -66,28 +82,36 @@ taps_stat_development:
   encoding: utf8
   database: taps_stat_development
   username: root
-  password: abcABC123
+  password: 12345678
+  host: taps.cithujepeaxe.ap-northeast-1.rds.amazonaws.com
+  port: 3306
 
 taps_stat_test:
   adapter: mysql2
   encoding: utf8
   database: taps_stat_test
   username: root
-  password:
+  password: 12345678
+  host: taps.cithujepeaxe.ap-northeast-1.rds.amazonaws.com
+  port: 3306
 
 taps_stat_production:
   adapter: mysql2
   encoding: utf8
   database: taps_stat_production
-  username: posting
-  password: taptaptap
+  username: root
+  password: 12345678
+  host: taps.cithujepeaxe.ap-northeast-1.rds.amazonaws.com
+  port: 3306
 
 taps_stat_staging:
   adapter: mysql2
   encoding: utf8
   database: taps_stat_staging
-  username: staging
-  password: taptaptap
+  username: root
+  password: 12345678
+  host: taps.cithujepeaxe.ap-northeast-1.rds.amazonaws.com
+  port: 3306
 
 #payments
 
@@ -96,25 +120,33 @@ taps_payments_development:
   encoding: utf8
   database: taps_payments_development
   username: root
-  password: abcABC123
+  password: 12345678
+  host: taps.cithujepeaxe.ap-northeast-1.rds.amazonaws.com
+  port: 3306
 
 taps_payments_test:
   adapter: mysql2
   encoding: utf8
   database: taps_payments_test
   username: root
-  password:
+  password: 12345678
+  host: taps.cithujepeaxe.ap-northeast-1.rds.amazonaws.com
+  port: 3306
 
 taps_payments_production:
   adapter: mysql2
   encoding: utf8
   database: taps_payments_prod
-  username: posting
-  password: taptaptap
+  username: root
+  password: 12345678
+  host: taps.cithujepeaxe.ap-northeast-1.rds.amazonaws.com
+  port: 3306
 
 taps_payments_staging:
   adapter: mysql2
   encoding: utf8
   database: taps_payments_staging
-  username: staging
-  password: taptaptap
+  username: root
+  password: 12345678
+  host: taps.cithujepeaxe.ap-northeast-1.rds.amazonaws.com
+  port: 3306
