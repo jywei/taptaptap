@@ -1,7 +1,7 @@
 development:
   adapter: mysql2
   encoding: utf8
-  database: taps_dev
+  database: taps_dev  #change this to fix the rake db:milti:migrate problem before rake db:create
   username: root
   password: 12345678
   host: taps.cithujepeaxe.ap-northeast-1.rds.amazonaws.com
